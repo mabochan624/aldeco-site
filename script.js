@@ -9,6 +9,8 @@
   var header = document.querySelector("header");
   var lastY = 0;
 
+  var floatCta = document.getElementById("float-cta");
+
   function onScroll() {
     var y = window.scrollY;
     if (header) {
@@ -16,6 +18,7 @@
       else header.classList.remove("hidden");
       header.classList.toggle("scrolled", y > 10);
     }
+    if (floatCta) floatCta.classList.toggle("show", y > 600);
     if (progress) {
       var max = document.documentElement.scrollHeight - window.innerHeight;
       progress.style.width = (max > 0 ? (y / max) * 100 : 0) + "%";
