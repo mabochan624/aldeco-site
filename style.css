@@ -489,14 +489,14 @@ img.ph.portrait { aspect-ratio: 3/4; height: auto; }
 
 /* ---- manifesto (ゲンバって、楽しい。) ---- */
 .manifesto-body {
-  font-family: "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", serif;
   max-width: 660px;
 }
 .m-line {
-  font-size: 17.5px;
-  line-height: 2.2;
-  letter-spacing: .03em;
-  margin-bottom: 2.1em;
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 2.15;
+  letter-spacing: .02em;
+  margin-bottom: 2em;
 }
 .m-line .grey { color: var(--muted); }
 .m-line.m-evidence {
