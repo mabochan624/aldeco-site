@@ -1,0 +1,277 @@
+/* ============================================
+   ALDECO BLOG — 「ゲンバのはなし」
+   style.css を継承。ブログ固有の見た目だけをここに置く。
+   ============================================ */
+
+/* ---- 一覧のヒーロー ---- */
+.blog-hero {
+  padding: 88px 0 76px;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 640px 420px at 88% 8%, rgba(255,184,0,.16), transparent 60%),
+    radial-gradient(ellipse 520px 360px at 2% 94%, rgba(255,106,0,.10), transparent 60%),
+    #fff;
+}
+.blog-hero .container { position: relative; z-index: 2; }
+.blog-hero .eyebrow {
+  display: inline-block;
+  font-size: 13px; font-weight: 900; letter-spacing: .25em;
+  color: #fff; background: var(--text);
+  padding: 6px 18px; border-radius: 999px;
+  margin-bottom: 24px; transform: rotate(-2deg);
+}
+.blog-hero h1 {
+  font-size: clamp(40px, 7vw, 80px);
+  font-weight: 900; line-height: 1.2; letter-spacing: .01em;
+}
+.blog-hero h1 .em {
+  color: var(--accent);
+  background: linear-gradient(transparent 68%, rgba(255,184,0,.45) 68%);
+}
+.blog-hero .sub {
+  margin-top: 26px; max-width: 680px;
+  font-size: clamp(15px, 2vw, 18px); color: var(--muted); font-weight: 500;
+}
+
+/* ---- 記事カード ---- */
+.post-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 32px;
+}
+.post-card a {
+  display: flex; flex-direction: column; height: 100%;
+  background: #fff;
+  border: 2px solid var(--text);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 6px 6px 0 var(--text);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.post-card a:hover { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--accent); }
+.pc-thumb { aspect-ratio: 16 / 10; overflow: hidden; background: var(--surface); }
+.pc-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.pc-thumb-none {
+  display: grid; place-items: center;
+  background: var(--text);
+}
+.pc-thumb-none span {
+  font-family: "Anton", sans-serif; font-size: 38px;
+  color: var(--accent); letter-spacing: .1em;
+}
+.pc-body { padding: 22px 22px 26px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.pc-meta { display: flex; align-items: center; gap: 12px; font-size: 12px; font-weight: 900; }
+.pc-cat {
+  background: var(--accent); color: #fff;
+  padding: 3px 12px; border-radius: 999px; letter-spacing: .06em;
+}
+.pc-meta time { color: var(--muted); }
+.pc-title { font-size: 20px; font-weight: 900; line-height: 1.5; }
+.pc-desc { font-size: 14px; color: var(--muted); line-height: 1.8; }
+.post-empty { color: var(--muted); font-weight: 700; }
+
+/* ---- 記事ページ ---- */
+.container.narrow { max-width: 760px; }
+
+.post-head { padding: 56px 0 32px; }
+.breadcrumb { font-size: 12px; font-weight: 700; color: var(--muted); display: flex; gap: 8px; margin-bottom: 26px; }
+.breadcrumb a:hover { color: var(--accent); }
+.post-cat {
+  display: inline-block;
+  background: var(--accent); color: #fff;
+  font-size: 12px; font-weight: 900; letter-spacing: .08em;
+  padding: 5px 16px; border-radius: 999px;
+  margin-bottom: 20px; transform: rotate(-1.5deg);
+}
+.post h1 {
+  font-size: clamp(28px, 4.6vw, 46px);
+  font-weight: 900; line-height: 1.45; letter-spacing: .01em;
+}
+.post-meta {
+  margin-top: 22px; display: flex; gap: 18px; flex-wrap: wrap;
+  font-size: 13px; font-weight: 700; color: var(--muted);
+}
+.post-meta time { color: var(--accent); font-weight: 900; }
+
+.post-hero { max-width: 1080px; margin: 0 auto 44px; padding: 0 24px; }
+.post-hero img {
+  width: 100%; border-radius: var(--radius);
+  border: 2px solid var(--text); box-shadow: 8px 8px 0 var(--text);
+}
+
+/* 要点(AIにも読者にも最初に読ませる) */
+.post-summary {
+  background: var(--surface);
+  border-left: 6px solid var(--accent);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 26px 28px;
+  margin-bottom: 48px;
+}
+.post-summary-title {
+  font-size: 12px; font-weight: 900; letter-spacing: .18em;
+  color: var(--accent); margin-bottom: 12px;
+}
+.post-summary ul { display: grid; gap: 10px; }
+.post-summary li {
+  font-weight: 700; font-size: 15px; line-height: 1.8;
+  padding-left: 22px; position: relative;
+}
+.post-summary li::before {
+  content: ""; position: absolute; left: 0; top: 11px;
+  width: 10px; height: 10px; background: var(--accent); border-radius: 2px;
+  transform: rotate(45deg);
+}
+
+/* 本文 */
+.post-body { font-size: 17px; line-height: 2.05; }
+.post-body > * + * { margin-top: 1.6em; }
+.post-body h2 {
+  font-size: clamp(22px, 3vw, 30px); font-weight: 900; line-height: 1.5;
+  margin-top: 2.4em; padding-bottom: 14px;
+  border-bottom: 3px solid var(--text);
+}
+.post-body h3 {
+  font-size: clamp(18px, 2.4vw, 22px); font-weight: 900;
+  margin-top: 2em; padding-left: 14px;
+  border-left: 5px solid var(--accent);
+}
+.post-body h4 { font-size: 17px; font-weight: 900; margin-top: 1.8em; color: var(--accent); }
+.post-body strong { font-weight: 900; }
+.post-body mark {
+  background: linear-gradient(transparent 62%, rgba(255,184,0,.55) 62%);
+  color: inherit; font-weight: 900;
+}
+.post-body a { color: var(--accent); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+.post-body a:hover { background: rgba(255,106,0,.1); }
+.post-body ul, .post-body ol { display: grid; gap: 10px; padding-left: 4px; }
+.post-body ul li { padding-left: 24px; position: relative; }
+.post-body ul li::before {
+  content: ""; position: absolute; left: 2px; top: 15px;
+  width: 9px; height: 9px; background: var(--accent); border-radius: 2px; transform: rotate(45deg);
+}
+.post-body ol { counter-reset: n; }
+.post-body ol li { counter-increment: n; padding-left: 38px; position: relative; }
+.post-body ol li::before {
+  content: counter(n); position: absolute; left: 0; top: 6px;
+  width: 26px; height: 26px; display: grid; place-items: center;
+  background: var(--text); color: #fff; border-radius: 8px;
+  font-size: 13px; font-weight: 900; line-height: 1;
+}
+.post-body blockquote {
+  border-left: 6px solid var(--accent2);
+  background: var(--surface);
+  padding: 22px 26px; border-radius: 0 var(--radius) var(--radius) 0;
+  font-weight: 700;
+}
+.post-body blockquote > * + * { margin-top: .8em; }
+.post-body figure { margin: 2.4em 0; }
+.post-body figure img, .post-body p img {
+  width: 100%; border-radius: var(--radius); border: 2px solid var(--line);
+}
+.post-body figcaption {
+  margin-top: 10px; font-size: 13px; color: var(--muted); font-weight: 700; text-align: center;
+}
+.post-body hr { border: 0; border-top: 2px dashed var(--line); margin: 3em 0; }
+.post-body code {
+  background: var(--surface); border: 1px solid var(--line);
+  padding: 2px 7px; border-radius: 6px; font-size: .92em;
+}
+
+/* 一次データ(AIO用の明示ブロック) */
+.post-facts {
+  margin-top: 64px;
+  border: 2px solid var(--text);
+  border-radius: var(--radius);
+  padding: 26px 28px;
+  background: #fff;
+  box-shadow: 6px 6px 0 var(--accent2);
+}
+.post-facts-title {
+  font-size: 12px; font-weight: 900; letter-spacing: .18em;
+  color: var(--text); margin-bottom: 14px;
+}
+.post-facts ul { display: grid; gap: 10px; }
+.post-facts li {
+  font-size: 15px; font-weight: 700; line-height: 1.8;
+  padding-left: 24px; position: relative;
+}
+.post-facts li::before {
+  content: ""; position: absolute; left: 0; top: 12px;
+  width: 12px; height: 3px; background: var(--accent);
+}
+.post-facts-note { margin-top: 14px; font-size: 12px; color: var(--muted); }
+
+/* FAQ */
+.post-faq { margin-top: 64px; }
+.post-faq h2 {
+  font-size: clamp(20px, 2.8vw, 26px); font-weight: 900;
+  padding-bottom: 12px; border-bottom: 3px solid var(--text); margin-bottom: 24px;
+}
+.post-faq dt {
+  font-weight: 900; font-size: 16px; margin-top: 24px;
+  padding-left: 30px; position: relative;
+}
+.post-faq dt::before {
+  content: "Q"; position: absolute; left: 0; top: 0;
+  font-family: "Anton", sans-serif; color: var(--accent); font-size: 20px; line-height: 1.4;
+}
+.post-faq dd {
+  margin-top: 8px; padding-left: 30px; position: relative;
+  color: var(--muted); font-weight: 500; line-height: 1.9;
+}
+.post-faq dd::before {
+  content: "A"; position: absolute; left: 0; top: 0;
+  font-family: "Anton", sans-serif; color: var(--text); font-size: 20px; line-height: 1.5;
+}
+
+/* 著者 */
+.post-author {
+  margin-top: 64px; display: flex; gap: 22px; align-items: flex-start;
+  background: var(--surface); border-radius: var(--radius); padding: 26px;
+}
+.post-author img {
+  width: 88px; height: 88px; border-radius: 50%; object-fit: cover;
+  border: 3px solid var(--text); flex-shrink: 0;
+}
+.post-author-name { font-weight: 900; font-size: 18px; display: flex; flex-direction: column; }
+.post-author-name span { font-size: 12px; color: var(--accent); font-weight: 900; margin-top: 2px; }
+.post-author-bio { margin-top: 10px; font-size: 14px; color: var(--muted); line-height: 1.9; }
+
+/* 関連記事 */
+.post-related { margin-top: 64px; }
+.post-related h2 {
+  font-size: clamp(20px, 2.8vw, 26px); font-weight: 900;
+  padding-bottom: 12px; border-bottom: 3px solid var(--text); margin-bottom: 20px;
+}
+.post-related ul { display: grid; gap: 12px; }
+.post-related a {
+  display: flex; gap: 14px; align-items: baseline; flex-wrap: wrap;
+  padding: 16px 18px; border: 2px solid var(--line); border-radius: 12px;
+  transition: border-color .2s, transform .2s;
+}
+.post-related a:hover { border-color: var(--accent); transform: translateX(4px); }
+.rel-cat {
+  background: var(--surface); color: var(--muted);
+  font-size: 11px; font-weight: 900; padding: 3px 10px; border-radius: 999px; white-space: nowrap;
+}
+.rel-title { font-weight: 900; font-size: 15px; }
+
+.post-back { margin: 56px 0 96px; font-weight: 900; }
+.post-back a { color: var(--accent); }
+.post-back a:hover { text-decoration: underline; }
+
+/* NEWSのリンク */
+.news-list a { font-weight: 700; }
+.news-list a:hover { color: var(--accent); text-decoration: underline; }
+
+@media (max-width: 720px) {
+  .post-head { padding: 36px 0 24px; }
+  .post-hero { padding: 0 16px; margin-bottom: 32px; }
+  .post-hero img { box-shadow: 5px 5px 0 var(--text); }
+  .post-body { font-size: 16px; line-height: 1.95; }
+  .post-summary { padding: 20px 22px; }
+  .post-facts { padding: 22px 20px; }
+  .post-author { flex-direction: column; align-items: center; text-align: center; }
+  .post-grid { gap: 24px; }
+}

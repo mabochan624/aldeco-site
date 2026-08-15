@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+<title>アルデコのゲンバのはなし</title>
+<link>https://aldeco.co.jp/blog/</link>
+<atom:link href="https://aldeco.co.jp/blog/feed.xml" rel="self" type="application/rss+xml"/>
+<description>岩手県奥州市の外構・造成会社アルデコのブログ。</description>
+<language>ja</language>
+<item>
+<title>500万円の現場を、3人で。50人工を36人工にした話</title>
+<link>https://aldeco.co.jp/blog/kanegasaki-50ninku/</link>
+<guid isPermaLink="true">https://aldeco.co.jp/blog/kanegasaki-50ninku/</guid>
+<pubDate>Sat, 15 Aug 2026 00:00:00 GMT</pubDate>
+<category>現場</category>
+<description>標準なら50人工と見積もられた500万円の現場を、3人で2週間、36人工でやり切った。根性じゃなく段取りで削った話と、アルデコがどうやって現場を考えているかを書きます。</description>
+</item>
+</channel>
+</rss>

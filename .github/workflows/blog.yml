@@ -1,0 +1,46 @@
+name: ブログ検証とビルド
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'content/**'
+      - 'tools/**'
+      - '.github/workflows/blog.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: blog-build
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # 品質ゲート。落ちたらここで止まり、生成物は更新されない＝公開されない。
+      - name: 記事を検証する
+        run: node tools/validate.mjs
+
+      - name: ブログをビルドする
+        run: node tools/build.mjs
+
+      - name: 生成物をコミットする
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add blog sitemap.xml robots.txt llms.txt index.html
+          if git diff --staged --quiet; then
+            echo "生成物に変更なし"
+          else
+            git commit -m "chore: ブログを自動ビルド [skip ci]"
+            git push
+          fi

@@ -805,6 +805,11 @@ img.ph.portrait { aspect-ratio: 3/4; height: auto; }
   font-size: 15px;
 }
 .news-list time { color: var(--accent); font-weight: 900; font-size: 13px; white-space: nowrap; }
+.news-list a { font-weight: 700; }
+.news-list a:hover { color: var(--accent); text-decoration: underline; }
+.news-more { max-width: 760px; margin-top: 22px; font-weight: 900; }
+.news-more a { color: var(--accent); }
+.news-more a:hover { text-decoration: underline; }
 
 /* ---- map ---- */
 .map-wrap {
