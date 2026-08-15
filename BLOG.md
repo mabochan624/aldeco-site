@@ -68,7 +68,7 @@ node tools/metrics.mjs set 2026-08 clicks=12 brand=3 impressions=430 recruit=8 a
         ↓
   ⑤人間ゲート … プレビューを見て代表がOKを出す
         ↓
-  ⑥公開       … git push → GitHub Actions が再検証してからPages反映
+  ⑥公開       … git push → GitHub Actions が再検証＋生成物のズレ検出 → Pages反映
         ↓
   ⑦計測       … 検索コンソール等の数字を見て、効いた型を見つける
         └────→ content/blog.rules.json を書き換えて①へ
@@ -94,7 +94,7 @@ node tools/metrics.mjs set 2026-08 clicks=12 brand=3 impressions=430 recruit=8 a
 | `tools/lib/*.mjs` | Markdown・frontmatter・テンプレート（依存ゼロの自前実装） |
 | `blog/` | **生成物。手で触らない**（次のビルドで消える） |
 | `blog.css` | ブログ固有のデザイン。`style.css` を継承 |
-| `.github/workflows/blog.yml` | push時に再検証→ビルド→生成物を自動コミット |
+| `.github/workflows/blog.yml` | push時に再検証し、生成物が記事とズレていないかを確かめる（書き込み権限なし） |
 | `.claude/skills/blog-post/` | 記事を書くときの指針（会社のゴール直下） |
 
 npmパッケージは一切使っていない。`node tools/build.mjs` が動けばそれで完結する。
