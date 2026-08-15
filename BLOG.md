@@ -32,6 +32,24 @@
 記事のネタもルールの追加も、星に効くかどうかで決める。
 実体は `content/blog.rules.json` の `northStar` にあり、機械検証（求職者向け記事が過半を切ると警告）にも使われている。
 
+### 計測タグの入れかた
+
+`content/site.json` に2つの値を入れて `node tools/build.mjs` を実行するだけ。
+全ページ（トップ・採用・プライバシー・ブログ記事）に自動で入る。個別のHTMLを触る必要はない。
+
+- `ga4.measurementId` … GA4の管理 → データストリーム → 測定ID（`G-` で始まる）
+- `searchConsole.verificationToken` … Search Console → 所有権の確認 → HTMLタグ の `content="..."` の中身だけ
+
+GA4を入れると、次の3つが自動でイベントとして飛ぶ。
+
+| イベント名 | 発火するとき |
+|---|---|
+| `recruit_click` | `/recruit/` または `#entry` へのリンクがクリックされた |
+| `line_click` | LINE（`lin.ee` / `line.me`）へのリンクがクリックされた |
+| `tel_click` | 電話番号がタップされた |
+
+`from` パラメータにどのページから飛んだかが入るので、**どの記事が採用ページに送ったか**が分かる。
+
 ### 記録のしかた
 
 ```bash
@@ -86,6 +104,8 @@ node tools/metrics.mjs set 2026-08 clicks=12 brand=3 impressions=430 recruit=8 a
 |---|---|
 | `content/posts/*.md` | **記事の正**。ここだけが唯一の情報源 |
 | `content/blog.rules.json` | **取り決めの正**。北極星・スキーマ・禁止表現・文字数。ここを育てる |
+| `content/site.json` | **計測タグの正**。GA4測定IDとSearch Console確認タグ。入れてビルドすれば全ページに入る |
+| `content/metrics.json` | 北極星の記録簿。月1で数字を入れる |
 | `content/_template.md` | 新規記事のひな形 |
 | `tools/build.mjs` | 生成器。記事HTML・一覧・RSS・sitemap・robots・llms.txt・トップNEWS |
 | `tools/validate.mjs` | 品質ゲート。エラー1件でexit 1 |

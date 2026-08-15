@@ -1,0 +1,11 @@
+{
+  "$comment": "計測タグの唯一の正。ここに値を入れて node tools/build.mjs を実行すると、全ページ（静的ページもブログ記事も）に自動で差し込まれる。空文字のあいだは何も出力されない。",
+  "ga4": {
+    "$howto": "GA4の管理 → データストリーム → 測定ID（G-で始まる文字列）をそのまま貼る。",
+    "measurementId": ""
+  },
+  "searchConsole": {
+    "$howto": "Search Console でプロパティを追加 → 所有権の確認 → HTMLタグ を選ぶと <meta name=\"google-site-verification\" content=\"◯◯◯\"> が出る。その content の中身だけを貼る。",
+    "verificationToken": ""
+  }
+}

@@ -10,6 +10,7 @@ import path from 'node:path';
 import { ROOT, loadRules, loadPublishedPosts, formatDate, postUrl } from './lib/posts.mjs';
 import { articlePage, indexPage } from './lib/templates.mjs';
 import { escapeHtml } from './lib/markdown.mjs';
+import { analyticsHead, syncStaticPage, STATIC_PAGES, loadSite } from './lib/analytics.mjs';
 
 const rules = loadRules();
 const { seo } = rules;
@@ -177,6 +178,15 @@ if (fs.existsSync(indexPath)) {
   }
 }
 
+// ---- 計測タグを静的ページにも差し込む ----
+const site = loadSite();
+const block = analyticsHead(site);
+for (const page of STATIC_PAGES) {
+  if (syncStaticPage(page, block)) written.push(`${page} (計測タグ)`);
+}
+
 console.log(`✅ ビルド完了: 記事 ${posts.length} 本`);
+if (!site.ga4?.measurementId?.trim()) console.log('   ⓘ GA4未設定（content/site.json の measurementId が空）');
+if (!site.searchConsole?.verificationToken?.trim()) console.log('   ⓘ Search Console未設定（content/site.json の verificationToken が空）');
 if (written.length) written.forEach((f) => console.log(`   ✎ ${f}`));
 else console.log('   変更なし（生成物は最新です）');

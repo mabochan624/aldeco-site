@@ -1,5 +1,6 @@
 import { escapeHtml, renderMarkdown, renderInline } from './markdown.mjs';
 import { formatDate, postUrl } from './posts.mjs';
+import { analyticsHead } from './analytics.mjs';
 
 const AUTHORS = {
   佐藤将希: {
@@ -59,6 +60,8 @@ const organizationLd = (seo) => ({
 
 export function layout({ title, description, canonical, ogImage, ogType = 'article', jsonLd, body, bodyClass = '' }) {
   const ld = jsonLd ? `\n<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>` : '';
+  const analytics = analyticsHead();
+  const tags = analytics ? `\n${analytics}` : '';
   return `<!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -80,7 +83,7 @@ export function layout({ title, description, canonical, ogImage, ogType = 'artic
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/style.css">
-<link rel="stylesheet" href="/blog.css">${ld}
+<link rel="stylesheet" href="/blog.css">${ld}${tags}
 </head>
 <body class="${bodyClass}">
 ${NAV}
