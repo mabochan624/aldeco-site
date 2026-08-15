@@ -18,6 +18,18 @@
 <link rel="stylesheet" href="/style.css">
 <!-- ANALYTICS:START -->
 <meta name="google-site-verification" content="G8R8m3gar3-l_zCH6oKk3zuVZLrA_u7wcCPGj2cS2X8">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1KLHYNGL5F"></script>
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}
+gtag('js',new Date());gtag('config','G-1KLHYNGL5F');
+document.addEventListener('click',function(e){
+  var a=e.target&&e.target.closest?e.target.closest('a'):null;if(!a)return;
+  var h=a.getAttribute('href')||'',from=location.pathname;
+  if(h.indexOf('/recruit/')===0||h.indexOf('#entry')===0)gtag('event','recruit_click',{link_url:h,from:from});
+  if(h.indexOf('lin.ee')>-1||h.indexOf('line.me')>-1)gtag('event','line_click',{from:from});
+  if(h.indexOf('tel:')===0)gtag('event','tel_click',{from:from});
+},{passive:true});
+</script>
 <!-- ANALYTICS:END -->
 </head>
 <body>
