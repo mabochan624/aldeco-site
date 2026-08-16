@@ -53,7 +53,8 @@ if (!cmd || cmd === 'list') {
     console.log('候補になる写真が見つかりません。\n');
     console.log('探した場所:');
     for (const s of cfg.sources) console.log(`  ${s.label}: ${expand(s.path)}`);
-    console.log('\nスマホの写真を自動でここに届けるには、OneDriveアプリの「カメラのアップロード」をオンにしてください。');
+    console.log('\n写真はその都度この場所に置いてください。');
+    console.log('スマホ→PCの同期フォルダができたら、blog.rules.json の photos.sources に1行足すだけで自動で拾えます。');
     process.exit(0);
   }
 
