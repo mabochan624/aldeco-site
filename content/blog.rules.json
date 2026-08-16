@@ -89,6 +89,18 @@
     "maxTitleWithSuffix": 62
   },
 
+  "photos": {
+    "$comment": "現場写真の取り込み設定。sources は上から順に探す。生の写真はEXIF（GPS＝お客様の家の座標）を含むので、必ず tools/photo.mjs を通してから公開する。",
+    "outDir": "img/blog",
+    "maxWidth": 1600,
+    "quality": 82,
+    "sources": [
+      { "label": "受け取り箱", "path": "content/inbox" },
+      { "label": "スマホ(OneDrive)", "path": "%USERPROFILE%/OneDrive/画像/カメラ ロール" },
+      { "label": "スクリーンショット", "path": "%USERPROFILE%/OneDrive/画像/スクリーンショット" }
+    ]
+  },
+
   "cta": {
     "$comment": "全記事の末尾に自動で差し込まれる。記事本文に手書きしない。",
     "heading": "ゲンバって、楽しい。",

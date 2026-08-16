@@ -111,11 +111,15 @@ node tools/metrics.mjs set 2026-08 clicks=12 brand=3 impressions=430 recruit=8 a
 | `tools/validate.mjs` | 品質ゲート。エラー1件でexit 1 |
 | `tools/hook-validate.mjs` | Claude Codeのフック本体（検証→合格なら自動ビルド） |
 | `tools/preview.mjs` | CSS・画像を埋め込んだ1枚のプレビューHTMLを作る |
+| `tools/photo.mjs` | 現場写真の取り込み。縮小＋**EXIF（GPS）完全削除** |
+| `tools/photo.ps1` | 画像処理の実体（.NET使用・ASCIIのみ。※PS5.1はBOMなしの日本語.ps1を読めない） |
+| `content/inbox/` | 写真の受け取り箱 |
 | `tools/lib/*.mjs` | Markdown・frontmatter・テンプレート（依存ゼロの自前実装） |
 | `blog/` | **生成物。手で触らない**（次のビルドで消える） |
 | `blog.css` | ブログ固有のデザイン。`style.css` を継承 |
 | `.github/workflows/blog.yml` | push時に再検証し、生成物が記事とズレていないかを確かめる（書き込み権限なし） |
 | `.claude/skills/blog-post/` | 記事を書くときの指針（会社のゴール直下） |
+| `.claude/skills/genba-post/` | スマホから投稿するときの段取り（同上） |
 
 npmパッケージは一切使っていない。`node tools/build.mjs` が動けばそれで完結する。
 
@@ -133,6 +137,36 @@ Claude Codeで話しかけるだけ。
 
 `blog-post` スキルが起動して、取り決めどおりの記事を書く。保存した瞬間にフックが検証を回し、
 落ちたらAIが自分で直す。通ったら自動でビルドされる。
+
+### スマホから投げる（`genba-post` スキル）
+
+写真を撮って、一言送るだけ。
+
+```
+今日は金ヶ崎でブロック積み。雨で段取り変えた
+```
+
+写真の候補が出るので番号で選ぶ → 足りない事実を最大3つだけ聞かれる → 記事が出来上がる →
+プレビューを見て「OK」で公開。ネタに困ったら「ネタある?」と聞けば、最近の写真を見て記事案を3つ返す。
+
+### 写真の扱い（重要）
+
+**生のスマホ写真をそのまま `img/` に置いてはいけない。** EXIFに GPS 座標＝お客様の家の位置が入っている。
+
+```bash
+node tools/photo.mjs list
+```
+
+```bash
+node tools/photo.mjs add my-slug "C:/path/to/photo.jpg"
+```
+
+`add` は 長辺1600pxに縮小 → JPEG再エンコード → `img/blog/<slug>-N.jpg` に保存する。
+再エンコードで**EXIFは完全に消える**（GPS文字列を仕込んだ画像で消滅を確認済み）。向きの補正も入る。
+
+取り込み元は `blog.rules.json` の `photos.sources`。スマホの写真を自動で届けるには、
+**OneDriveアプリの「カメラのアップロード」をオン**にする。以後、撮った写真は
+`OneDrive/画像/カメラ ロール` に自動で入り、そこから候補として拾える。
 
 ### 手で書く
 
@@ -196,9 +230,17 @@ git add -A && git commit -m "post: 記事タイトル" && git push
 |---|---|---|
 | **計測を入れる** ←次 | Search Console の所有権確認、GA4 設置、`/recruit/` 遷移とLINEクリックのイベント化 | 代表のGoogleログインが必要 |
 | **数字をループに戻す** | 記事ごとの順位・クリックを見て、効いた型を `blog.rules.json` に反映する | 3ヶ月ぶんのデータ |
-| **ネタ切れをなくす** | `content/queue.md` にネタ候補を貯める。写真を置くだけで下書きが立つ導線 | なし |
-| **定期実行** | 週1でClaude Codeを起動し、ネタ棚から下書きを1本作って代表に送る | なし |
+| **定期実行** | 週1で自動起動し、カメラロールの新着写真から記事案を3つ作って代表に送る。代表は「2番でGO」と返すだけ | OneDriveのカメラアップロードをオンにすること |
 | **JobPosting構造化データ** | 求人条件が確定したら `/recruit/` に付ける。Googleしごと検索に載る | 試用期間・勤務時間・保険の確定 |
+
+### なぜ Google フォトではなく OneDrive なのか
+
+「Googleフォトを勝手に見て候補を出す」はできない。Google は2025年3月に Photos Library API の
+ライブラリ読み取り権限を廃止し、いまは **Photos Picker（ユーザーが毎回ブラウザで写真を選ぶ）**か、
+アプリ自身が作った写真しか触れない。つまり「勝手に見る」経路が公式に塞がれている。
+
+OneDrive のカメラアップロードなら、スマホで撮った写真が**そのままPCのフォルダに落ちてくる**。
+API連携も認証も要らず、ローカルのファイルを見るだけで済む。やりたかったことが一番素直に実現する。
 
 ### 計測が入るまでの暫定ルール
 
