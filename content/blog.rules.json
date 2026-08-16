@@ -1,6 +1,5 @@
 {
   "$comment": "アルデコ・ブログの取り決め。ここを書き換えると、記事の生成AIも機械検証(validate.mjs)も同時に従う。これが『取り決めを深めていく』唯一の場所。",
-
   "northStar": {
     "statement": "アルデコに出会う人を、増やし続ける。",
     "metric": "検索とAIからサイトに来た人の数（月間クリック数）",
@@ -8,78 +7,153 @@
     "why": "表示されただけは『見られた』止まり。クリックは『アルデコという名前を見て、選んだ』瞬間。認知の中で一番硬く、対外的にも説明できる。",
     "grade": "指名検索数（「アルデコ」で検索された数）。これが増え始めたら、名前を覚えられた段階に入った合図。",
     "primaryAudience": "求職者・若手",
-    "diagnostics": ["記事→/recruit/ 到達数", "AI引用チェック（月1・5問中いくつで名前が出るか）", "応募の一歩（LINE・電話・フォーム）"],
-    "inputs": ["求職者向け一次情報記事の公開本数", "記事あたりの facts の数"],
+    "diagnostics": [
+      "記事→/recruit/ 到達数",
+      "AI引用チェック（月1・5問中いくつで名前が出るか）",
+      "応募の一歩（LINE・電話・フォーム）"
+    ],
+    "inputs": [
+      "求職者向け一次情報記事の公開本数",
+      "記事あたりの facts の数"
+    ],
     "aioGoal": "AIに『岩手 外構 求人』『建設 未経験』を聞いたとき、アルデコの一次情報が引用される。"
   },
-
   "frontmatter": {
-    "required": ["title", "description", "date", "slug", "category", "audience", "author", "summary", "facts", "tags"],
-    "optional": ["hero", "heroAlt", "faq", "noindex", "draft"],
+    "required": [
+      "title",
+      "description",
+      "date",
+      "slug",
+      "category",
+      "audience",
+      "author",
+      "summary",
+      "facts",
+      "tags"
+    ],
+    "optional": [
+      "hero",
+      "heroAlt",
+      "faq",
+      "noindex",
+      "draft"
+    ],
     "enums": {
-      "category": ["現場", "働く", "技術", "思想", "会社"],
-      "audience": ["求職者", "元請け", "地域"],
-      "author": ["佐藤将希"]
+      "category": [
+        "現場",
+        "働く",
+        "技術",
+        "思想",
+        "会社"
+      ],
+      "audience": [
+        "求職者",
+        "元請け",
+        "地域"
+      ],
+      "author": [
+        "佐藤将希"
+      ]
     },
     "lengths": {
-      "title": { "min": 16, "max": 42 },
-      "description": { "min": 60, "max": 120 },
-      "heroAlt": { "min": 4, "max": 80 }
+      "title": {
+        "min": 16,
+        "max": 42
+      },
+      "description": {
+        "min": 60,
+        "max": 120
+      },
+      "heroAlt": {
+        "min": 4,
+        "max": 80
+      }
     },
     "counts": {
-      "tags": { "min": 1, "max": 5 },
-      "summary": { "min": 2, "max": 4 },
-      "facts": { "min": 1, "max": 6 },
-      "faq": { "min": 0, "max": 6 }
+      "tags": {
+        "min": 1,
+        "max": 5
+      },
+      "summary": {
+        "min": 2,
+        "max": 4
+      },
+      "facts": {
+        "min": 1,
+        "max": 6
+      },
+      "faq": {
+        "min": 0,
+        "max": 6
+      }
     },
     "patterns": {
       "slug": "^[a-z0-9]+(-[a-z0-9]+)*$",
       "date": "^\\d{4}-\\d{2}-\\d{2}$"
     }
   },
-
   "body": {
     "minChars": 800,
     "maxChars": 6000,
     "minH2": 2,
     "maxH2": 8,
     "minInternalLinks": 1,
-    "internalLinkTargets": ["/recruit/", "/", "/blog/", "https://genroku.app", "https://nambo.app"],
+    "internalLinkTargets": [
+      "/recruit/",
+      "/",
+      "/blog/",
+      "https://genroku.app",
+      "https://nambo.app"
+    ],
     "requireImageAlt": true,
     "forbidH1InBody": true,
     "maxParagraphChars": 400
   },
-
   "audienceMix": {
     "$comment": "北極星ガード。求職者向けが過半を切ったら警告する。",
-    "求職者": { "minRatio": 0.5 }
+    "求職者": {
+      "minRatio": 0.5
+    }
   },
-
   "banned": {
     "$comment": "誇大・断定・法的にまずい表現。1つでも含むと不合格。",
     "words": [
-      "業界No.1", "業界ナンバーワン", "日本一", "必ず稼げる", "絶対に稼げる",
-      "誰でも簡単に", "完全無料", "100%安全", "リスクゼロ", "圧倒的No.1",
-      "他社より優れて", "地域最安", "格安"
+      "業界No.1",
+      "業界ナンバーワン",
+      "日本一",
+      "必ず稼げる",
+      "絶対に稼げる",
+      "誰でも簡単に",
+      "完全無料",
+      "100%安全",
+      "リスクゼロ",
+      "圧倒的No.1",
+      "他社より優れて",
+      "地域最安",
+      "格安"
     ]
   },
-
   "clicheGuard": {
     "$comment": "借り物構文チェック(言葉のエッセンス集『作り方の型』より)。含まれると警告。",
     "words": [
-      "私たちは、お客様第一に", "地域に根ざした", "笑顔あふれる", "アットホームな職場",
-      "やりがいのある仕事", "夢に向かって", "一致団結", "日々精進",
-      "お客様に寄り添", "感動をお届け"
+      "私たちは、お客様第一に",
+      "地域に根ざした",
+      "笑顔あふれる",
+      "アットホームな職場",
+      "やりがいのある仕事",
+      "夢に向かって",
+      "一致団結",
+      "日々精進",
+      "お客様に寄り添",
+      "感動をお届け"
     ]
   },
-
   "factRules": {
     "$comment": "AIOの核。事実は『どこにも書いていないアルデコ固有の一次情報』であること。数字か固有名詞を必ず含む。",
     "requireNumberOrProperNoun": true,
     "minChars": 10,
     "maxChars": 120
   },
-
   "seo": {
     "origin": "https://aldeco.co.jp",
     "blogBase": "/blog/",
@@ -88,23 +162,25 @@
     "titleSuffix": "｜アルデコのゲンバのはなし",
     "maxTitleWithSuffix": 62
   },
-
   "photos": {
-    "$comment": "現場写真の取り込み設定。sources は上から順に探す。生の写真はEXIF（GPS＝お客様の家の座標）を含むので、必ず tools/photo.mjs を通してから公開する。",
+    "$comment": "現場写真の取り込み設定。sources は上から順に探す。生の写真はEXIF（GPS＝お客様の家の座標）を含むので、必ず tools/photo.mjs を通してから公開する。スマホ→PCの同期フォルダができたら、ここに1行足すだけで自動取得になる。",
     "outDir": "img/blog",
     "maxWidth": 1600,
     "quality": 82,
     "sources": [
-      { "label": "受け取り箱", "path": "content/inbox" },
-      { "label": "スマホ(OneDrive)", "path": "%USERPROFILE%/OneDrive/画像/カメラ ロール" },
-      { "label": "スクリーンショット", "path": "%USERPROFILE%/OneDrive/画像/スクリーンショット" }
+      {
+        "label": "受け取り箱",
+        "path": "content/inbox"
+      }
     ]
   },
-
   "cta": {
     "$comment": "全記事の末尾に自動で差し込まれる。記事本文に手書きしない。",
     "heading": "ゲンバって、楽しい。",
     "text": "アルデコは、業界を変える最初の証明になる仲間を探しています。未経験でも、一歩目はLINEでどうぞ。",
-    "primary": { "label": "採用情報を見る", "href": "/recruit/" }
+    "primary": {
+      "label": "採用情報を見る",
+      "href": "/recruit/"
+    }
   }
 }
