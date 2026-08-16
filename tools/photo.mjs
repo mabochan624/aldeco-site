@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 // 現場写真をブログに載せられる形にする。
 //
-//   node tools/photo.mjs list [件数]        … 候補になる写真を新しい順に一覧
+//   node tools/photo.mjs recent [分数]      … チャットに添付されたばかりの写真を探す
+//   node tools/photo.mjs list [件数]        … 受け取り箱の写真を新しい順に一覧
 //   node tools/photo.mjs add <slug> <画像...> … 整えて img/blog/<slug>-N.jpg に保存
 //
 // 「整える」= 向きを直す / 長辺を縮める / JPEG再エンコード。
@@ -43,6 +44,46 @@ const fmtSize = (n) => (n > 1024 * 1024 ? `${(n / 1024 / 1024).toFixed(1)}MB` : 
 const fmtDate = (ms) => new Date(ms).toISOString().slice(0, 16).replace('T', ' ');
 
 const [cmd, ...rest] = process.argv.slice(2);
+
+// ---- チャットに添付されたばかりの写真を探す ----
+// 添付ファイルは ~/.claude/uploads/<セッションID>/ に落ちる。
+// **直近に添付されたものだけ**を対象にする。過去の添付を全部漁ると、
+// 現場と関係ない私的なファイルまで拾ってしまうため。
+if (cmd === 'recent') {
+  const minutes = Number(rest[0]) || 30;
+  const uploads = path.join(os.homedir(), '.claude', 'uploads');
+  const cutoff = Date.now() - minutes * 60 * 1000;
+  const hits = [];
+
+  const walk = (dir, depth) => {
+    if (depth > 2 || !fs.existsSync(dir)) return;
+    for (const name of fs.readdirSync(dir)) {
+      const abs = path.join(dir, name);
+      let st;
+      try { st = fs.statSync(abs); } catch { continue; }
+      if (st.isDirectory()) { walk(abs, depth + 1); continue; }
+      if (!EXTS.has(path.extname(name).toLowerCase())) continue;
+      if (st.mtimeMs < cutoff) continue;
+      hits.push({ abs, mtime: st.mtimeMs, size: st.size });
+    }
+  };
+  walk(uploads, 0);
+  hits.sort((a, b) => b.mtime - a.mtime);
+
+  if (!hits.length) {
+    console.log(`直近${minutes}分に添付された写真はありません。`);
+    console.log(`探した場所: ${uploads}`);
+    process.exit(0);
+  }
+
+  console.log(`直近${minutes}分の添付写真 ${hits.length}件\n`);
+  hits.forEach((p, i) => {
+    console.log(`${String(i + 1).padStart(2)}. ${fmtDate(p.mtime)}  ${fmtSize(p.size).padStart(7)}`);
+    console.log(`    ${p.abs}`);
+  });
+  console.log('\n取り込むには: node tools/photo.mjs add <slug> "<上のパス>"');
+  process.exit(0);
+}
 
 // ---- 一覧 ----
 if (!cmd || cmd === 'list') {
