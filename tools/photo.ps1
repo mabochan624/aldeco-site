@@ -1,7 +1,11 @@
-# Resize a photo for the blog using only .NET (no extra install needed).
+# Resize a photo for the blog using only what ships with Windows.
+#   - decode with WIC (PresentationCore), so JPEG / PNG / HEIC all work
 #   - honour the EXIF orientation flag so phone photos are upright
 #   - shrink the long edge
-#   - re-encode as JPEG, which DROPS ALL EXIF INCLUDING GPS
+#   - re-encode as JPEG WITHOUT metadata, which DROPS ALL EXIF INCLUDING GPS
+#
+# HEIC is why this uses WIC instead of System.Drawing: System.Drawing cannot
+# decode HEIC at all, and iPhone photos are HEIC by default.
 #
 # NOTE: keep this file ASCII-only. Windows PowerShell 5.1 reads a .ps1 without a
 # BOM as ANSI, so non-ASCII comments corrupt the script. Japanese notes live in
@@ -15,46 +19,49 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
-Add-Type -AssemblyName System.Drawing
+Add-Type -AssemblyName PresentationCore
+Add-Type -AssemblyName WindowsBase
 
-$img = [System.Drawing.Image]::FromFile($Source)
-try {
-  $orientationId = 0x0112
-  if ($img.PropertyIdList -contains $orientationId) {
-    $o = $img.GetPropertyItem($orientationId).Value[0]
-    switch ($o) {
-      3 { $img.RotateFlip([System.Drawing.RotateFlipType]::Rotate180FlipNone) }
-      6 { $img.RotateFlip([System.Drawing.RotateFlipType]::Rotate90FlipNone) }
-      8 { $img.RotateFlip([System.Drawing.RotateFlipType]::Rotate270FlipNone) }
-    }
+$uri = New-Object System.Uri((Resolve-Path $Source).Path)
+$decoder = [System.Windows.Media.Imaging.BitmapDecoder]::Create($uri, 'None', 'OnLoad')
+$image = [System.Windows.Media.Imaging.BitmapSource]$decoder.Frames[0]
+
+# EXIF orientation. Query paths differ per container, so try the common ones.
+# Some decoders (HEIF) already apply it and expose nothing here - that is fine.
+$orientation = 1
+if ($decoder.Frames[0].Metadata) {
+  foreach ($q in @('/app1/ifd/{ushort=274}', '/ifd/{ushort=274}')) {
+    try {
+      $v = $decoder.Frames[0].Metadata.GetQuery($q)
+      if ($v) { $orientation = [int]$v; break }
+    } catch { }
   }
-
-  $w = $img.Width
-  $h = $img.Height
-  if ($w -gt $MaxWidth) {
-    $h = [int][Math]::Round($h * $MaxWidth / $w)
-    $w = $MaxWidth
-  }
-
-  # Drawing into a fresh Bitmap is what strips the EXIF metadata.
-  $bmp = New-Object System.Drawing.Bitmap -ArgumentList $w, $h
-  $g = [System.Drawing.Graphics]::FromImage($bmp)
-  $g.InterpolationMode    = [System.Drawing.Drawing2D.InterpolationMode]::HighQualityBicubic
-  $g.PixelOffsetMode      = [System.Drawing.Drawing2D.PixelOffsetMode]::HighQuality
-  $g.SmoothingMode        = [System.Drawing.Drawing2D.SmoothingMode]::HighQuality
-  $g.CompositingQuality   = [System.Drawing.Drawing2D.CompositingQuality]::HighQuality
-  $g.DrawImage($img, 0, 0, $w, $h)
-  $g.Dispose()
-
-  $codec = [System.Drawing.Imaging.ImageCodecInfo]::GetImageEncoders() | Where-Object { $_.MimeType -eq 'image/jpeg' }
-  $encParams = New-Object System.Drawing.Imaging.EncoderParameters -ArgumentList 1
-  $encParams.Param[0] = New-Object System.Drawing.Imaging.EncoderParameter -ArgumentList ([System.Drawing.Imaging.Encoder]::Quality, [long]$Quality)
-
-  $bmp.Save($Dest, $codec, $encParams)
-  $bmp.Dispose()
-
-  Write-Output "$w x $h"
 }
-finally {
-  $img.Dispose()
+
+$angle = 0
+switch ($orientation) {
+  3 { $angle = 180 }
+  6 { $angle = 90 }
+  8 { $angle = 270 }
 }
+if ($angle -ne 0) {
+  $rotate = New-Object System.Windows.Media.RotateTransform -ArgumentList $angle
+  $image = New-Object System.Windows.Media.Imaging.TransformedBitmap -ArgumentList $image, $rotate
+}
+
+if ($image.PixelWidth -gt $MaxWidth) {
+  $factor = $MaxWidth / $image.PixelWidth
+  $scale = New-Object System.Windows.Media.ScaleTransform -ArgumentList $factor, $factor
+  $image = New-Object System.Windows.Media.Imaging.TransformedBitmap -ArgumentList $image, $scale
+}
+
+# Creating the frame from the transformed source carries no metadata,
+# so the encoded JPEG has no EXIF and therefore no GPS.
+$encoder = New-Object System.Windows.Media.Imaging.JpegBitmapEncoder
+$encoder.QualityLevel = $Quality
+$encoder.Frames.Add([System.Windows.Media.Imaging.BitmapFrame]::Create($image))
+
+$stream = [System.IO.File]::Create($Dest)
+try { $encoder.Save($stream) } finally { $stream.Close() }
+
+Write-Output ("" + $image.PixelWidth + " x " + $image.PixelHeight)
