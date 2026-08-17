@@ -116,7 +116,9 @@ for (const file of targets) {
     if (n < fr.minChars) err(rel, `facts[${i}] が短すぎます（${n}字 / 最低${fr.minChars}字）。`);
     if (n > fr.maxChars) err(rel, `facts[${i}] が長すぎます（${n}字 / 最大${fr.maxChars}字）。`);
     if (fr.requireNumberOrProperNoun) {
-      const hasEvidence = /[0-9０-９]/.test(f) || /[ァ-ヶA-Za-z]{3,}/.test(f) || /[市町村県]/.test(f);
+      // カタカナは長音符「ー」を含めて数える。含めないと「バール」「コンクリート」が
+      // 固有名詞と認識されず、正しい一次情報が弾かれる。
+      const hasEvidence = /[0-9０-９]/.test(f) || /[ァ-ヶーA-Za-z]{3,}/.test(f) || /[市町村県]/.test(f);
       if (hasEvidence === false) {
         err(rel, `facts[${i}] に数字も固有名詞もありません。`, 'AIに引用されるのは一次情報だけです。「3人で2週間」「金ヶ崎第14期」のように具体的に。');
       }
