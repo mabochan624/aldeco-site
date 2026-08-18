@@ -1,0 +1,17 @@
+{
+  "$comment": "このリポジトリをプロジェクトのルートとして開いたとき（クラウド等）に効く設定。記事Markdownを保存したら自動で検証し、通ればビルドする。代表のPCでは親フォルダ側の設定でも同じフックが動く。",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/tools/hook-validate.mjs\"",
+            "timeout": 60
+          }
+        ]
+      }
+    ]
+  }
+}
