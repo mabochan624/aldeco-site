@@ -144,7 +144,10 @@
 }
 .post-body a { color: var(--accent); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
 .post-body a:hover { background: rgba(255,106,0,.1); }
-.post-body ul, .post-body ol { display: grid; gap: 10px; padding-left: 4px; }
+/* style.css のリセットは ul にしか list-style:none を当てていない。
+   ol は自前の番号バッジを ::before で出すので、標準の番号を必ず消す。
+   消し忘れると「1. 1」のように番号が二重に出る。 */
+.post-body ul, .post-body ol { display: grid; gap: 10px; padding-left: 4px; list-style: none; }
 .post-body ul li { padding-left: 24px; position: relative; }
 .post-body ul li::before {
   content: ""; position: absolute; left: 2px; top: 15px;
