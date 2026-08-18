@@ -88,6 +88,8 @@ node tools/photo.mjs doctor
 |---|---|
 | Windows (.NET WIC) | 縮小・回転補正・メタデータ削除すべて可。JPEG/PNG/HEIC |
 | ImageMagick | 同上 |
+| Python Pillow | 同上（HEICは不可） |
+| ffmpeg | 同上（HEICは不可） |
 | 簡易処理 | **位置情報の削除のみ。縮小も回転もできない。JPEGのみ** |
 
 「簡易処理」だったときは、次を守ること。
