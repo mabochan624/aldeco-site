@@ -112,7 +112,11 @@ node tools/metrics.mjs set 2026-08 clicks=12 brand=3 impressions=430 recruit=8 a
 | `tools/hook-validate.mjs` | Claude Codeのフック本体（検証→合格なら自動ビルド） |
 | `tools/preview.mjs` | CSS・画像を埋め込んだ1枚のプレビューHTMLを作る |
 | `tools/photo.mjs` | 現場写真の取り込み。縮小＋**EXIF（GPS）完全削除** |
-| `tools/photo.ps1` | 画像処理の実体（.NET使用・ASCIIのみ。※PS5.1はBOMなしの日本語.ps1を読めない） |
+| `tools/photo.ps1` | Windowsの画像処理（.NET WIC・ASCIIのみ。※PS5.1はBOMなしの日本語.ps1を読めない） |
+| `tools/photo.py` | Pillowでの画像処理（ImageMagickが無い環境の代替） |
+| `tools/lib/jpeg.mjs` | 最後の砦。デコードせずJPEGの位置情報だけを落とす |
+| `tools/ensure-image-tools.sh` | セッション開始時、画像ツールが無ければ入れる |
+| `.claude/settings.json` | フックの設定（保存時の自動検証・起動時の画像ツール用意） |
 | `content/inbox/` | 写真の受け取り箱 |
 | `tools/lib/*.mjs` | Markdown・frontmatter・テンプレート（依存ゼロの自前実装） |
 | `blog/` | **生成物。手で触らない**（次のビルドで消える） |
@@ -214,9 +218,9 @@ node tools/photo.mjs add my-slug "C:/path/to/photo.jpg"
 
 取り込み元は `blog.rules.json` の `photos.sources`。既定では `content/inbox/` を見る。
 
-**写真をどう届けるかは未決。** スマホからPCへ自動で流す経路（OneDriveのカメラアップロード等）は
-アプリの追加インストールが要るため採用していない。当面は、リマインドに返信する形で
-その都度渡してもらう。`photos.sources` に別の同期フォルダを足せば、いつでも自動化できる。
+**写真はチャットに添付するだけでいい。** 添付は `~/.claude/uploads/<セッションID>/` に保存されるので、
+`node tools/photo.mjs recent` で拾える。スマホに追加のアプリを入れる必要はない。
+PCで作業するときは `content/inbox/` に置いてもよい。
 
 ### 手で書く
 
@@ -278,9 +282,10 @@ git add -A && git commit -m "post: 記事タイトル" && git push
 
 | 段階 | 内容 | ブロッカー |
 |---|---|---|
-| **計測を入れる** ←次 | Search Console の所有権確認、GA4 設置、`/recruit/` 遷移とLINEクリックのイベント化 | 代表のGoogleログインが必要 |
+| ~~計測を入れる~~ **完了** | Search Console（所有権確認・サイトマップ送信）、GA4（測定ID `G-1KLHYNGL5F`）とも稼働中 | — |
 | **数字をループに戻す** | 記事ごとの順位・クリックを見て、効いた型を `blog.rules.json` に反映する | 3ヶ月ぶんのデータ |
-| **定期実行** | 週1で自動起動し、カメラロールの新着写真から記事案を3つ作って代表に送る。代表は「2番でGO」と返すだけ | OneDriveのカメラアップロードをオンにすること |
+| **GA4のキーイベント指定** ←次 | `recruit_click` 等を重要指標として扱わせる | イベントが管理画面の一覧に出るまで待つ |
+| **定期実行の強化** | 平日昼のリマインドは稼働中。将来は写真の候補出しまで自動化する | — |
 | **JobPosting構造化データ** | 求人条件が確定したら `/recruit/` に付ける。Googleしごと検索に載る | 試用期間・勤務時間・保険の確定 |
 
 ### 写真の自動取得について（現状の結論）
