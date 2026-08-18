@@ -10,11 +10,14 @@
 // 生のスマホ写真には **EXIF（GPSの位置情報＝お客様の家の座標）** が入っている。
 // これを消さずに公開してはいけない。この処理は環境によって手段が変わる:
 //
-//   1. Windows        … tools/photo.ps1（.NETのWIC）。JPEG/PNG/HEIC対応、縮小も回転も可
-//   2. ImageMagick    … Linux等。同じく縮小・回転・メタデータ削除ができる
-//   3. どちらも無い時 … tools/lib/jpeg.mjs で位置情報だけ落とす（縮小はできない）
+//   1. Windows        … tools/photo.ps1（.NETのWIC）。JPEG/PNG/HEIC対応
+//   2. ImageMagick    … Linux等
+//   3. Python Pillow  … tools/photo.py。Linuxのクラウド環境で一番よく入っている
+//   4. ffmpeg         … 上記が無いとき
+//   5. どれも無い時   … tools/lib/jpeg.mjs で位置情報だけ落とす（縮小も回転もできない）
 //
-// 3に落ちたときは縮小されないので、ページが重くなる。それでもGPSは必ず消える。
+// 1〜4なら縮小も回転補正もできる。5に落ちたときは縮小されずページが重くなるが、
+// それでもGPSは必ず消える。消せない形式（HEIC等）は処理せずエラーで止まる。
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -33,17 +36,24 @@ const fmtSize = (n) => (n > 1024 * 1024 ? `${(n / 1024 / 1024).toFixed(1)}MB` : 
 const fmtDate = (ms) => new Date(ms).toISOString().slice(0, 16).replace('T', ' ');
 
 // ---- この環境で使える手段を調べる ----
-const has = (cmd) => {
-  const probe = spawnSync(cmd, ['-version'], { encoding: 'utf8' });
-  return probe.status === 0 || /version/i.test(probe.stdout || '');
+// 上から順に試して、最初に見つかったものを使う。
+const probe = (cmd, args) => {
+  const r = spawnSync(cmd, args, { encoding: 'utf8' });
+  return r.status === 0;
 };
 
 function detectMethod() {
-  if (process.platform === 'win32') return { name: 'windows', label: 'Windows (.NET WIC)' };
+  if (process.platform === 'win32') return { name: 'windows', label: 'Windows (.NET WIC)', full: true };
+
   for (const cmd of ['magick', 'convert']) {
-    if (has(cmd)) return { name: 'magick', cmd, label: `ImageMagick (${cmd})` };
+    if (probe(cmd, ['-version'])) return { name: 'magick', cmd, label: `ImageMagick (${cmd})`, full: true };
   }
-  return { name: 'jsonly', label: '簡易処理（位置情報の削除のみ・縮小なし）' };
+  for (const cmd of ['python3', 'python']) {
+    if (probe(cmd, ['-c', 'import PIL'])) return { name: 'python', cmd, label: `Python Pillow (${cmd})`, full: true };
+  }
+  if (probe('ffmpeg', ['-version'])) return { name: 'ffmpeg', label: 'ffmpeg', full: true };
+
+  return { name: 'jsonly', label: '簡易処理（位置情報の削除のみ・縮小なし）', full: false };
 }
 
 // ---- 1枚を整える ----
@@ -55,25 +65,47 @@ function convertOne(method, src, dst) {
       '-MaxWidth', String(cfg.maxWidth), '-Quality', String(cfg.quality),
     ], { encoding: 'utf8' });
     if (ps.status !== 0) throw new Error(ps.stderr || ps.stdout);
-    return { detail: (ps.stdout || '').trim(), stripped: true, resized: true };
+    return { detail: (ps.stdout || '').trim(), resized: true };
   }
 
   if (method.name === 'magick') {
-    const args = [src, '-auto-orient', '-resize', `${cfg.maxWidth}x>`, '-strip', '-quality', String(cfg.quality), dst];
-    const r = spawnSync(method.cmd, args, { encoding: 'utf8' });
-    if (r.status !== 0) throw new Error(r.stderr || r.stdout);
-    const id = spawnSync(method.cmd === 'magick' ? 'magick' : 'identify',
-      method.cmd === 'magick' ? ['identify', '-format', '%w x %h', dst] : ['-format', '%w x %h', dst],
+    const r = spawnSync(method.cmd,
+      [src, '-auto-orient', '-resize', `${cfg.maxWidth}x>`, '-strip', '-quality', String(cfg.quality), dst],
       { encoding: 'utf8' });
-    return { detail: (id.stdout || '').trim(), stripped: true, resized: true };
+    if (r.status !== 0) throw new Error(r.stderr || r.stdout);
+    return { detail: '', resized: true };
+  }
+
+  if (method.name === 'python') {
+    const r = spawnSync(method.cmd,
+      [path.join(ROOT, 'tools', 'photo.py'), src, dst, String(cfg.maxWidth), String(cfg.quality)],
+      { encoding: 'utf8' });
+    if (r.status !== 0) throw new Error(r.stderr || r.stdout);
+    return { detail: (r.stdout || '').trim(), resized: true };
+  }
+
+  if (method.name === 'ffmpeg') {
+    // ffmpegは静止画のEXIF回転を自動では見ないので、こちらで読んで指示する。
+    const rot = { 3: 'transpose=1,transpose=1', 6: 'transpose=1', 8: 'transpose=2' };
+    const filters = [];
+    if (/\.jpe?g$/i.test(src)) {
+      const o = readOrientation(fs.readFileSync(src));
+      if (rot[o]) filters.push(rot[o]);
+    }
+    filters.push(`scale='min(${cfg.maxWidth},iw)':-2`);
+    const r = spawnSync('ffmpeg',
+      ['-y', '-loglevel', 'error', '-i', src, '-vf', filters.join(','), '-map_metadata', '-1', '-q:v', '3', dst],
+      { encoding: 'utf8' });
+    if (r.status !== 0) throw new Error(r.stderr || r.stdout);
+    return { detail: '', resized: true };
   }
 
   // 最後の砦: デコードせずに位置情報だけ落とす
   if (!/\.jpe?g$/i.test(src)) {
     throw new Error(
-      'この環境ではJPEGしか扱えません（画像処理ツールがありません）。\n' +
-      '      HEICやPNGは、スマホ側でJPEGにしてから送ってください。\n' +
-      '      iPhoneなら 設定 → カメラ → フォーマット → 「互換性優先」にすると以後JPEGで撮れます。'
+      `この環境ではJPEGしか扱えません（画像処理ツールがありません）。
+      HEICやPNGは、スマホ側でJPEGにしてから送ってください。
+      iPhoneなら 設定 → カメラ → フォーマット → 「互換性優先」にすると以後JPEGで撮れます。`
     );
   }
   const buf = fs.readFileSync(src);
@@ -81,16 +113,9 @@ function convertOne(method, src, dst) {
   const orientation = readOrientation(buf);
   fs.writeFileSync(dst, stripMetadata(buf));
 
-  const out = fs.readFileSync(dst);
-  if (hasGps(out)) throw new Error('位置情報を消し切れませんでした。この写真は使わないでください。');
+  if (hasGps(fs.readFileSync(dst))) throw new Error('位置情報を消し切れませんでした。この写真は使わないでください。');
 
-  return {
-    detail: '縮小なし',
-    stripped: true,
-    resized: false,
-    hadGps: had,
-    needsRotation: orientation !== 1,
-  };
+  return { detail: '縮小なし', resized: false, hadGps: had, needsRotation: orientation !== 1 };
 }
 
 // ---- 受け取り箱などから写真を集める ----
@@ -121,7 +146,7 @@ if (cmd === 'doctor') {
   if (m.name === 'jsonly') {
     console.log('⚠ 縮小ができません。GPSは確実に消えますが、写真のサイズは元のままです。');
     console.log('  扱えるのはJPEGのみ。HEIC・PNGは受け付けません。');
-    console.log('  ImageMagick が入っている環境なら、縮小も回転補正もできます。');
+    console.log('  ImageMagick・Python Pillow・ffmpeg のどれかが入っていれば、縮小も回転補正もできます。');
   } else {
     console.log('✅ 縮小・回転補正・メタデータ削除のすべてが使えます。');
   }
