@@ -191,6 +191,9 @@ for (const file of targets) {
   for (const w of rules.clicheGuard.words) {
     if (plain.includes(w)) warn(rel, `借り物構文「${w}」が含まれています。`, '「言葉のエッセンス集」の作り方の型: 概念より実話の手触り。自分の言葉に置き換えてください。');
   }
+  for (const w of rules.metaphorGuard?.words ?? []) {
+    if (plain.includes(w)) warn(rel, `現場の外から借りた比喩「${w}」が含まれています。`, 'その日に実際にやった動作・見たものに置き換えてください。例:「一発を大きく振れない」→「まとめて掴んで引けば早いが、その力が隣に伝わる」。');
+  }
 }
 
 // ---------- 記事全体の検証 ----------
