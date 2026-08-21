@@ -201,6 +201,35 @@ PCの電源は関係ない。スキルもツールもリポジトリの中にあ
 どの環境でも**位置情報だけは必ず消える**。消せない形式（HEIC等）は、処理せずエラーで止まる。
 「消せないまま公開する」経路は存在しない。
 
+### MacBookで開発する
+
+この仕組みは Windows・macOS・Linux のどれでも動く。ツールもスキルもフックも全部リポジトリの中にあるので、**クローンするだけ**でいい。
+
+```bash
+git clone https://github.com/mabochan624/aldeco-site.git
+```
+
+必要なのは **Node.js だけ**。npmパッケージは1つも使っていないので `npm install` は不要。
+
+```bash
+cd aldeco-site && node tools/photo.mjs doctor
+```
+
+**「簡易処理」と出たら、写真を縮小できない状態。**macOSには ImageMagick も Pillow も標準では入っていないので、初回は入れる。
+
+```bash
+brew install imagemagick
+```
+
+セッション開始時に `tools/ensure-image-tools.sh` が走り、Homebrew があれば自動で入れる。手で打つ必要があるのは Homebrew 自体が無いときだけ。
+
+**リポジトリの外にあるもの**（Macには来ない）:
+
+| もの | どうなるか |
+|---|---|
+| `言葉のエッセンス集.md` `理念体系_v2.md` `行動指針_確定版.md` 等 | **公開リポジトリなので入れていない。**Macでは実話バンクを参照できないので、記事の事実は都度ユーザーに聞く（スキルに明記済み） |
+| 平日昼のリマインド（`genba-blog-nudge`） | 各マシンの `~/.claude/scheduled-tasks/` にあるので、Macで使うなら作り直す |
+
 ### 写真の扱い（重要）
 
 **生のスマホ写真をそのまま `img/` に置いてはいけない。** EXIFに GPS 座標＝お客様の家の位置が入っている。

@@ -118,6 +118,29 @@ function convertOne(method, src, dst) {
   return { detail: '縮小なし', resized: false, hadGps: had, needsRotation: orientation !== 1 };
 }
 
+/**
+ * どの経路を通ったあとでも、最後に必ず位置情報を落として確認する。
+ * 変換ツールが本当にメタデータを消したかを信じない、という設計。
+ * 1〜4の経路はすでに向きをピクセルに反映しているので、
+ * ここで回転タグごと消しても表示は崩れない。
+ */
+function finalize(dst) {
+  if (!/\.jpe?g$/i.test(dst)) return;
+  const before = fs.readFileSync(dst);
+  const after = stripMetadata(before);
+  if (after.length !== before.length) fs.writeFileSync(dst, after);
+  if (hasGps(fs.readFileSync(dst))) {
+    fs.unlinkSync(dst);
+    throw new Error('位置情報を消し切れませんでした。この写真は使えません。');
+  }
+}
+
+function convert(method, src, dst) {
+  const r = convertOne(method, src, dst);
+  finalize(dst);
+  return r;
+}
+
 // ---- 受け取り箱などから写真を集める ----
 function collect() {
   const found = [];
@@ -245,7 +268,7 @@ if (cmd === 'add') {
 
     let r;
     try {
-      r = convertOne(method, abs, outAbs);
+      r = convert(method, abs, outAbs);
     } catch (e) {
       console.error(`✖ 変換に失敗: ${path.basename(abs)}\n      ${e.message}`);
       process.exitCode = 1;

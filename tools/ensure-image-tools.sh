@@ -14,7 +14,20 @@ command -v convert >/dev/null 2>&1 && exit 0
 command -v ffmpeg  >/dev/null 2>&1 && exit 0
 if command -v python3 >/dev/null 2>&1 && python3 -c 'import PIL' >/dev/null 2>&1; then exit 0; fi
 
-# apt-get が無い環境（代表のWindows PCなど）では何もしない。
+# macOS: Homebrew があれば ImageMagick を入れる。
+# macOS標準の sips は使わない。メタデータを確実に消せるか検証できていないため。
+if command -v brew >/dev/null 2>&1; then
+  echo "写真を縮小する道具が無いので ImageMagick を入れます（初回のみ・数分かかることがあります）..."
+  if brew install imagemagick >/dev/null 2>&1; then
+    echo "✅ ImageMagick を入れました。縮小・回転補正・HEICが使えます。"
+  else
+    echo "⚠ 入れられませんでした。写真は縮小なしで扱います（位置情報は必ず消えます）。"
+  fi
+  exit 0
+fi
+
+# Linux: apt-get があれば入れる。
+# apt-get も brew も無い環境（代表のWindows PCなど）では何もしない。
 command -v apt-get >/dev/null 2>&1 || exit 0
 
 SUDO=""
