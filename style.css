@@ -843,6 +843,17 @@ img.ph.portrait { aspect-ratio: 3/4; height: auto; }
 .form .submit-row { margin-top: 32px; }
 .form button.btn { border: 0; cursor: pointer; font-family: inherit; font-size: 16px; }
 
+.form-done {
+  max-width: 680px;
+  padding: 32px 28px;
+  border: 2px solid var(--accent);
+  border-radius: var(--radius);
+}
+.form-done-title { font-weight: 900; font-size: 18px; color: var(--accent); margin-bottom: 10px; }
+.form-done p { line-height: 2; }
+.form-done a { color: var(--accent); font-weight: 700; }
+.form-error { margin-top: 14px; font-weight: 700; color: #d0342c; }
+
 /* ---- legal page ---- */
 .legal { max-width: 760px; }
 .legal h3 { font-size: 18px; font-weight: 900; margin: 32px 0 12px; }

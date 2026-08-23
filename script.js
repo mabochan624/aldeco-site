@@ -89,5 +89,39 @@
     targets.forEach(function (el) { io.observe(el); });
   }
 
+  /* ---- フォーム: ページ遷移せず、その場で送信して結果を出す ---- */
+  [].slice.call(document.querySelectorAll('form[action*="formspree.io"]')).forEach(function (form) {
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var btn = form.querySelector('button[type="submit"]');
+      var label = btn ? btn.textContent : "";
+      if (btn) { btn.disabled = true; btn.textContent = "送信中…"; }
+
+      fetch(form.action, {
+        method: "POST",
+        body: new FormData(form),
+        headers: { Accept: "application/json" }
+      }).then(function (res) {
+        if (!res.ok) throw new Error("send failed");
+        if (typeof gtag === "function") gtag("event", "form_submit", { form_url: form.action, from: location.pathname });
+        var done = document.createElement("div");
+        done.className = "form-done";
+        done.innerHTML = '<p class="form-done-title">送信しました。ありがとうございます！</p>' +
+          '<p>内容を確認して、折り返しご連絡します。<br>お急ぎの場合は <a href="tel:080-4402-3343">080-4402-3343</a>（佐藤・代表直通）へどうぞ。</p>';
+        form.parentNode.replaceChild(done, form);
+        done.scrollIntoView({ block: "center", behavior: reduced ? "auto" : "smooth" });
+      }).catch(function () {
+        if (btn) { btn.disabled = false; btn.textContent = label; }
+        var err = form.querySelector(".form-error");
+        if (!err) {
+          err = document.createElement("p");
+          err.className = "form-error";
+          form.appendChild(err);
+        }
+        err.textContent = "送信できませんでした。時間をおいてもう一度試すか、お電話（080-4402-3343）かメール（info@aldeco.co.jp）でご連絡ください。";
+      });
+    });
+  });
+
   onScroll();
 })();
