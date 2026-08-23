@@ -855,6 +855,43 @@ img.ph.portrait { aspect-ratio: 3/4; height: auto; }
 .form-done a { color: var(--accent); font-weight: 700; }
 .form-error { margin-top: 14px; font-weight: 700; color: #d0342c; }
 
+/* ---- letter page (代表からの長い手紙) ---- */
+.letter-hero {
+  background: var(--dark);
+  color: #fff;
+  text-align: center;
+  padding: 150px 0 90px;
+}
+.letter-hero .eyebrow { color: var(--accent); font-family: 'Anton', sans-serif; letter-spacing: .2em; font-size: 14px; }
+.letter-hero h1 { font-size: clamp(38px, 7vw, 64px); font-weight: 900; margin: 18px 0 26px; }
+.letter-hero h1 .em { color: var(--accent); }
+.letter-hero-sub { line-height: 2.2; opacity: .85; font-size: 15px; }
+.letter { max-width: 720px; }
+.letter h2 { font-size: 24px; font-weight: 900; margin: 76px 0 26px; line-height: 1.5; }
+.letter h2:first-child { margin-top: 0; }
+.letter h2 .num { font-family: 'Anton', sans-serif; color: var(--accent); margin-right: 14px; font-size: 20px; letter-spacing: .05em; }
+.letter p { line-height: 2.2; margin-bottom: 1.7em; font-size: 15.5px; }
+.letter a { color: var(--accent); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+.letter .letter-strong { font-size: 19px; font-weight: 900; line-height: 2; border-left: 4px solid var(--accent); padding: 6px 0 6px 20px; margin: 2em 0; }
+.letter-photo { margin: 48px 0; }
+.letter-photo img { width: 100%; border-radius: var(--radius); }
+.letter-photo figcaption { font-size: 13px; color: var(--muted); margin-top: 10px; }
+.letter-lists { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 36px 0; }
+.letter-list { border: 2px solid var(--text); border-radius: var(--radius); padding: 26px 24px; }
+.letter-list.want { border-color: var(--accent); }
+.letter-list-title { font-weight: 900; font-size: 17px; margin-bottom: 14px; }
+.letter-list.want .letter-list-title { color: var(--accent); }
+.letter-list ul { list-style: none; }
+.letter-list li { line-height: 1.9; margin-bottom: 12px; padding-left: 22px; position: relative; font-size: 14.5px; }
+.letter-list.want li::before { content: "◎"; position: absolute; left: 0; color: var(--accent); font-weight: 900; }
+.letter-list.notwant li::before { content: "―"; position: absolute; left: 0; color: var(--muted); font-weight: 900; }
+.letter-list-note { font-size: 13px; color: var(--muted); line-height: 1.9; margin-top: 16px; }
+.letter-sig { text-align: right; font-weight: 900; line-height: 2.2; margin-top: 56px; }
+@media (max-width: 720px) {
+  .letter-lists { grid-template-columns: 1fr; }
+  .letter h2 { font-size: 20px; margin-top: 60px; }
+}
+
 /* ---- legal page ---- */
 .legal { max-width: 760px; }
 .legal h3 { font-size: 18px; font-weight: 900; margin: 32px 0 12px; }
