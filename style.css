@@ -217,6 +217,9 @@ section.alt { background: var(--surface); }
   margin-bottom: 24px;
 }
 .sec-lead { color: var(--muted); max-width: 720px; margin-bottom: 48px; font-weight: 500; }
+.sec-center { text-align: center; }
+.sec-center .sec-label::after { margin-left: auto; margin-right: auto; }
+.sec-center .sec-lead { margin-left: auto; margin-right: auto; }
 
 /* ---- stat cards ---- */
 .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
