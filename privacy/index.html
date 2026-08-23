@@ -22,6 +22,7 @@ document.addEventListener('click',function(e){
   if(h.indexOf('/recruit/')===0||h.indexOf('#entry')===0)gtag('event','recruit_click',{link_url:h,from:from});
   if(h.indexOf('lin.ee')>-1||h.indexOf('line.me')>-1)gtag('event','line_click',{from:from});
   if(h.indexOf('tel:')===0)gtag('event','tel_click',{from:from});
+  if(h.indexOf('mailto:')===0)gtag('event','mail_click',{from:from});
 },{passive:true});
 </script>
 <!-- ANALYTICS:END -->
