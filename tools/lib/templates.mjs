@@ -47,6 +47,7 @@ const organizationLd = (seo) => ({
   url: `${seo.origin}/`,
   logo: `${seo.origin}/img/logo-black.png`,
   telephone: '080-4402-3343',
+  email: 'info@aldeco.co.jp',
   address: {
     '@type': 'PostalAddress',
     addressCountry: 'JP',
