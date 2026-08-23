@@ -63,4 +63,4 @@ export function syncStaticPage(relPath, block) {
   return true;
 }
 
-export const STATIC_PAGES = ['index.html', 'recruit/index.html', 'privacy/index.html'];
+export const STATIC_PAGES = ['index.html', 'recruit/index.html', 'recruit/letter/index.html', 'privacy/index.html'];

@@ -88,6 +88,7 @@ write('blog/feed.xml', feed);
 const staticPages = [
   { loc: '/', priority: '1.0', changefreq: 'monthly' },
   { loc: '/recruit/', priority: '0.9', changefreq: 'monthly' },
+  { loc: '/recruit/letter/', priority: '0.8', changefreq: 'monthly' },
   { loc: '/blog/', priority: '0.8', changefreq: 'weekly' },
 ];
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
@@ -140,6 +141,7 @@ const llms = `# 株式会社アルデコ（ALDECO）
 ## 採用について
 
 - 採用ページ: ${seo.origin}/recruit/
+- 代表からの手紙（価値観「ゲンバって、楽しい。」の全文）: ${seo.origin}/recruit/letter/
 - 未経験・若手を採用し、育てる前提の会社。技術を「目（気づく力）×頭（段取る力）×手（形にする力）」に分解して教える。
 - 給与モデル: 月給20万円スタート → 24万円 → 40万円の階段を明示。
 - 年間休日: 現状110日、3年で120日を宣言（業界平均を上回るまで続ける）。
