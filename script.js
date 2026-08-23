@@ -89,6 +89,16 @@
     targets.forEach(function (el) { io.observe(el); });
   }
 
+  /* ---- 電話番号: 全角やスペース混じりでも自動で整える ---- */
+  [].slice.call(document.querySelectorAll('input[type="tel"]')).forEach(function (input) {
+    input.addEventListener("blur", function () {
+      input.value = input.value
+        .replace(/[０-９]/g, function (c) { return String.fromCharCode(c.charCodeAt(0) - 0xFEE0); })
+        .replace(/[ー−–—―]/g, "-")
+        .replace(/[\s　()（）]/g, "");
+    });
+  });
+
   /* ---- フォーム: ページ遷移せず、その場で送信して結果を出す ---- */
   [].slice.call(document.querySelectorAll('form[action*="formspree.io"]')).forEach(function (form) {
     form.addEventListener("submit", function (e) {
