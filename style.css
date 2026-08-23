@@ -58,6 +58,7 @@ header {
 .nav-links { display: flex; gap: 28px; align-items: center; font-size: 14px; font-weight: 700; }
 .nav-links a { color: var(--muted); transition: color .2s; }
 .nav-links a:hover { color: var(--text); }
+.nav-links a.btn, .nav-links a.btn:hover { color: #fff; }
 .btn {
   display: inline-block;
   background: var(--accent);

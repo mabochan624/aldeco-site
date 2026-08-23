@@ -441,7 +441,7 @@ document.addEventListener('click',function(e){
       </div>
       <div class="row">
         <label for="f-tel">電話番号（折り返し用）<span class="req">必須</span></label>
-        <input type="tel" id="f-tel" name="電話番号" required autocomplete="tel">
+        <input type="tel" id="f-tel" name="電話番号" required autocomplete="tel" inputmode="tel" pattern="0[0-9\-]{9,12}" title="例：080-4402-3343（0から始まる電話番号を、数字とハイフンで入力してください）">
       </div>
       <div class="row">
         <label for="f-mail">メールアドレス</label>
