@@ -7,6 +7,12 @@
     workshop: { label: '道具づくり', x: .16, y: .31 },
     development: { label: 'アプリ開発', x: .89, y: .72 }
   };
+  const mobileViews = {
+    all: views.all,
+    construction: { label: '施工の手元', x: .24, y: .61 },
+    workshop: { label: '道具づくり', x: .18, y: .34 },
+    development: { label: 'アプリ開発', x: .85, y: .76 }
+  };
   let viewer;
   let stage;
   let canvas;
@@ -14,6 +20,7 @@
   let description;
   let hint;
   let trigger;
+  let artworkViews = views;
   let activeView = 'all';
   let imageRequest = 0;
   let ready = false;
@@ -35,7 +42,7 @@
     artwork.style.height = `${imageHeight}px`;
     canvas.style.width = `${canvasWidth}px`;
     canvas.style.height = `${canvasHeight}px`;
-    const view = views[activeView];
+    const view = artworkViews[activeView];
     stage.scrollLeft = Math.max(0, (canvasWidth - imageWidth) / 2 + imageWidth * view.x - width / 2);
     stage.scrollTop = Math.max(0, (canvasHeight - imageHeight) / 2 + imageHeight * view.y - height / 2);
   }
@@ -47,7 +54,7 @@
     });
     hint.textContent = name === 'all'
       ? 'まち全体を表示しています。上のボタンから、それぞれの仕事を近くで見られます。'
-      : `${views[name].label}を表示しています。画像の上をスクロールして、まわりの様子も見られます。`;
+      : `${artworkViews[name].label}を表示しています。画像の上をスクロールして、まわりの様子も見られます。`;
     frameArtwork();
   }
 
@@ -106,7 +113,11 @@
     artwork.hidden = true;
     description.textContent = button.dataset.caption || 'ALDECOが目指すまちのイラスト';
     artwork.alt = button.querySelector('img')?.alt || '施工、道具づくり、アプリ開発が一つにつながる、ALDECOのまちのイラスト';
-    artwork.src = button.dataset.townArt;
+    const mobileArtwork = button.dataset.townArtMobile;
+    const useMobileArtwork = Boolean(mobileArtwork) && window.matchMedia('(max-width:760px)').matches;
+    // Keep the chosen composition and its focal points together until the viewer closes.
+    artworkViews = useMobileArtwork ? mobileViews : views;
+    artwork.src = useMobileArtwork ? mobileArtwork : button.dataset.townArt;
     canvas.style.width = '100%';
     canvas.style.height = '100%';
     stage.scrollLeft = 0;

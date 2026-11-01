@@ -1,6 +1,7 @@
 /* The narrow-screen cover gives the work itself more space. */
 .mobile-menu-toggle,
 .field-header nav .mobile-nav-contact { display:none; }
+.surface-picture { display:block; width:100%; height:100%; }
 
 @media (max-width:760px) {
  body.town-painted-direction { --mobile-space:24px; }
@@ -54,10 +55,10 @@
  }
  body.town-painted-direction .surface-answer { margin-left:.65em; }
  body.town-painted-direction .surface-art {
-  order:1; width:100%; height:auto; aspect-ratio:4/3; overflow:hidden;
+  order:1; width:100%; height:auto; aspect-ratio:3/4; overflow:hidden;
  }
  body.town-painted-direction .surface-image {
-  width:100%; height:100%; object-fit:cover; object-position:32% center;
+  width:100%; height:100%; object-fit:contain; object-position:center;
  }
  body.town-painted-direction .surface-caption p {
   order:2; width:calc(100% - 64px); margin:25px auto 27px;
@@ -101,9 +102,6 @@
  body.town-painted-direction .town-detail-link { min-height:44px; font-size:11px; }
 }
 
-@media (min-width:480px) and (max-width:760px) {
- body.town-painted-direction .surface-art { aspect-ratio:3/2; }
-}
 @media (max-width:360px) {
  body.town-painted-direction .surface-heading { width:calc(100% - 48px); }
  body.town-painted-direction .surface-caption p { width:calc(100% - 48px); }
