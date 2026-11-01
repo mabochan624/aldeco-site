@@ -3,9 +3,9 @@
 
   const views = {
     all: { label: '全体', x: .5, y: .5 },
-    construction: { label: '施工の手元', x: .23, y: .68 },
-    workshop: { label: '道具づくり', x: .08, y: .43 },
-    development: { label: 'アプリ開発', x: .89, y: .82 }
+    construction: { label: '施工の手元', x: .21, y: .66 },
+    workshop: { label: '道具づくり', x: .16, y: .31 },
+    development: { label: 'アプリ開発', x: .89, y: .72 }
   };
   let viewer;
   let stage;
