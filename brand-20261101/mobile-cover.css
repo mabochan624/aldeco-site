@@ -26,6 +26,12 @@
  .mobile-menu-toggle[aria-expanded="true"] .mobile-menu-icon::before { top:5.5px; transform:rotate(45deg); }
  .mobile-menu-toggle[aria-expanded="true"] .mobile-menu-icon::after { bottom:5.5px; left:0; width:20px; transform:rotate(-45deg); }
  body.town-painted-direction .field-header nav .mobile-nav-contact { display:flex; }
+ body.town-painted-direction:not(.mobile-nav-ready) .field-header nav {
+  display:grid; grid-template-columns:1fr 1fr; gap:0 20px;
+ }
+ body.town-painted-direction:not(.mobile-nav-ready) .field-header nav .mobile-nav-contact {
+  grid-column:1/-1;
+ }
  body.mobile-nav-ready .field-header nav { display:none; }
  body.mobile-nav-ready.mobile-menu-open .field-header nav {
   display:grid; grid-template-columns:1fr 1fr; position:absolute; top:100%; left:-24px;
