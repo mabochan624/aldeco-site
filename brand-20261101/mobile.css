@@ -1,0 +1,160 @@
+/* A continuous reading order for the narrow screen, using the approved artwork. */
+@media (max-width: 760px) {
+  body[data-town-style="editorial"] { --mobile-space: 24px; }
+  body[data-town-style="editorial"] .wrap { width: calc(100% - var(--mobile-space) * 2); }
+
+  .town-immersive-direction .field-header {
+    position: relative; inset: auto; transform: none;
+    min-height: 0; padding: 22px 0 0; gap: 16px;
+  }
+  .town-immersive-direction .field-header nav {
+    justify-content: space-between; gap: 8px; padding: 0;
+    border-block: 1px solid var(--line); font-size: 12px;
+  }
+  .town-immersive-direction .field-header nav a {
+    display: flex; align-items: center; justify-content: center;
+    min-height: 44px; padding: 0 3px;
+  }
+  .town-immersive-direction .header-mail { min-height: 32px; font-size: 10px; }
+  .town-immersive-direction .wordmark span { font-size: 24px; }
+
+  body[data-town-style="editorial"] .one-surface-hero { display: flex; flex-direction: column; }
+  body[data-town-style="editorial"] .town-scene,
+  body[data-town-style="editorial"] .surface-stage,
+  body[data-town-style="editorial"] .surface-caption,
+  body[data-town-style="editorial"] .surface-caption > div { display: contents; }
+  body[data-town-style="editorial"] .surface-heading {
+    position: static; width: calc(100% - var(--mobile-space) * 2);
+    order: 0; padding: 26px 0 15px; margin: 0 auto; text-align: left;
+  }
+  body[data-town-style="editorial"] .surface-copy h1 {
+    align-items: flex-start; font-size: clamp(40px, 11.3vw, 54px);
+    line-height: 1.4; font-weight: 450; letter-spacing: .015em;
+  }
+  .town-immersive-direction .surface-caption p {
+    order: 1; width: calc(100% - var(--mobile-space) * 2); margin: 0 auto 23px;
+    font-size: 13px; line-height: 1.9; color: #536158;
+  }
+  body[data-town-style="editorial"] .surface-art { order: 2; height: auto; }
+  body[data-town-style="editorial"] .surface-image { display: block; width: 100%; height: auto; }
+  body[data-town-style="editorial"] .town-portals {
+    order: 3; width: calc(100% - var(--mobile-space) * 2); margin: 0 auto;
+    padding: 0; gap: 0; grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid var(--line); background: transparent;
+  }
+  body[data-town-style="editorial"] .town-portal {
+    box-shadow: none; border: 0; border-radius: 0; background: transparent;
+    transform: none;
+  }
+  body[data-town-style="editorial"] .town-portal--work,
+  body[data-town-style="editorial"] .town-portal--tools {
+    grid-row: 1; min-height: 87px; padding: 18px 0; align-items: center;
+  }
+  body[data-town-style="editorial"] .town-portal--work { padding-right: 12px; }
+  body[data-town-style="editorial"] .town-portal--tools { padding-left: 18px; }
+  body[data-town-style="editorial"] .town-portal--tools::before {
+    display: block; top: 19px; bottom: 19px; left: 0; width: 1px;
+    height: auto; background: var(--line); box-shadow: none;
+  }
+  body[data-town-style="editorial"] .town-portal--work strong,
+  body[data-town-style="editorial"] .town-portal--tools strong {
+    font-size: 15px; font-weight: 550; padding: 0;
+  }
+  body[data-town-style="editorial"] .town-portal--work small,
+  body[data-town-style="editorial"] .town-portal--tools small {
+    font-size: 11px; line-height: 1.9; color: #69726d;
+  }
+  body[data-town-style="editorial"] .town-portal--work .town-portal__arrow,
+  body[data-town-style="editorial"] .town-portal--tools .town-portal__arrow { display: none; }
+  body[data-town-style="editorial"] .town-portal--work strong::after,
+  body[data-town-style="editorial"] .town-portal--tools strong::after {
+    content: " ↘"; font: 400 15px/1 var(--latin); color: #a9572e;
+  }
+  body[data-town-style="editorial"] .town-portal--noxel {
+    grid-row: 2; min-height: 85px; padding: 16px 0;
+    border-top: 1px solid var(--line); gap: 14px; background: var(--paper);
+  }
+  .town-portal--noxel > img { mix-blend-mode: multiply; }
+  .town-portal--noxel .town-portal__copy strong { font-size: 23px; }
+  .town-portal--noxel .town-portal__copy small { font-size: 12px; }
+  body[data-town-style="editorial"] .surface-caption small {
+    order: 4; width: calc(100% - var(--mobile-space) * 2); margin: 15px auto 0;
+    font-size: 10px; line-height: 1.8; color: #737c75;
+  }
+  .town-detail-link {
+    order: 5; align-self: flex-start; min-height: 44px; margin: 0 var(--mobile-space);
+    padding: 5px 0; font-size: 12px; gap: 18px;
+  }
+
+  /* Keep meaningful copy legible, with a consistent rhythm between chapters. */
+  .surface-direction .construction { padding-block: 60px 64px; }
+  .surface-direction .construction .section-head { gap: 21px; margin-bottom: 28px; }
+  .surface-direction .construction .section-head > div > p,
+  .tool-copy > p,
+  .noxel-portfolio .noxel-summary p { font-size: 14px; line-height: 2; }
+  .surface-direction .surface-practices { font-size: 12px; }
+  .surface-practices a { min-height: 40px; }
+  .construction figcaption,
+  .construction figcaption > span:first-child,
+  .residential-photo figcaption p { font-size: 11px; line-height: 1.85; }
+  .tool-grid { padding-top: 56px; }
+  .tool-caption { font-size: 11px; }
+  .original-tool { min-height: 44px; font-size: 12px; align-items: center; }
+  .tool-kicker { font-size: 12px; }
+  .tool-next { font-size: 13px; min-height: 44px; }
+  .bridge-line { gap: 6px; grid-template-columns: 1fr 10px 1fr 10px 1fr; }
+  .bridge-line b { font-size: 10px; }
+  .bridge-line small { font-size: 10px; }
+
+  .noxel { padding-block: 60px 16px; }
+  .noxel-topline { flex-wrap: wrap; gap: 6px 16px; }
+  .noxel-topline > span { font-size: 9px; }
+  .noxel-portfolio { padding-bottom: 36px; gap: 24px; }
+  .noxel-app-world { max-width: 340px; }
+  .text-link { font-size: 13px; min-height: 44px; }
+  .app-pair { gap: 28px; }
+  .app-example {
+    padding: 0 0 18px; border: 1px solid #dce3df; border-radius: 16px;
+    overflow: hidden; background: #fffefa;
+  }
+  .app-text { padding: 23px 22px 21px; }
+  .app-name span { font-size: 24px; }
+  .noxel .app-text h3 { font-size: clamp(24px, 6.8vw, 31px); line-height: 1.6; }
+  .app-more { display: inline-flex; align-items: center; min-height: 44px; font-size: 13px; }
+  .app-screen { width: calc(100% - 28px); max-width: 360px; }
+  .app-screen > span { font-size: 11px; padding-top: 12px; }
+  .place-history .drawing-copy > p:last-child { font-size: 14px; }
+  .place-demo { padding: 16px 12px 20px; }
+  .place-plan-label { flex-wrap: wrap; gap: 3px 12px; }
+  .place-plan-label b { font-size: 12px; }
+  .place-plan-label > span, .place-history .place-photo figcaption { font-size: 11px; }
+  .place-history-note, .availability { font-size: 11px; line-height: 1.9; }
+  .noxel .noxel-more { margin-top: 23px; padding-block: 28px; gap: 9px; }
+  .noxel .base-copy p { font-size: 13px; }
+  .noxel .noxel-more > a { min-height: 44px; font-size: 13px; }
+  .help-entry {
+    margin-block: 16px 52px; padding: 23px 20px; gap: 15px;
+    border-radius: 12px; display: grid; grid-template-columns: 42px minmax(0, 1fr);
+  }
+  .help-entry > img { width: 42px; height: 42px; mix-blend-mode: multiply; }
+  .help-entry h3 { font-size: 20px; line-height: 1.65; }
+  .help-entry p:not(.eyebrow) { font-size: 12px; }
+  .help-entry > a { grid-column: 1 / -1; margin: 2px 0 0; min-height: 44px; justify-content: space-between; font-size: 13px; }
+  .company { padding-block: 52px 60px; }
+  .facts dt { font-size: 12px; }
+  .facts dd { font-size: 14px; }
+  .facts small { font-size: 11px; }
+  .footer-bottom { font-size: 10px; gap: 16px 24px; }
+  .footer-bottom small { font-size: 10px; }
+  .footer-bottom a { min-height: 36px; display: inline-flex; align-items: center; }
+}
+
+@media (max-width: 360px) {
+  body[data-town-style="editorial"] { --mobile-space: 20px; }
+  .town-immersive-direction .field-header nav { font-size: 11px; gap: 4px; }
+  body[data-town-style="editorial"] .town-portal--tools { padding-left: 13px; }
+  body[data-town-style="editorial"] .town-portal--work strong,
+  body[data-town-style="editorial"] .town-portal--tools strong { font-size: 14px; }
+  .bridge-line small { font-size: 9px; }
+  .app-text { padding-inline: 18px; }
+}
