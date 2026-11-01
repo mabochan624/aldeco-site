@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="820" viewBox="0 0 1000 820" role="img" aria-labelledby="title desc">
+  <title id="title">外構配置図と写真ピンの表示イメージ</title>
+  <desc id="desc">CAD図面の表現で、既存建物、玄関ポーチ、CB塀、土間コンクリート、砕石を描いたサンプル。敷地は13000×10500、土間は11000×3900、右の砕石は幅1800の例。材料範囲の重複はない。CBと土間のピンからその場所の写真を参照する機能の表示イメージ。</desc>
+  <defs>
+    <pattern id="concrete" width="18" height="18" patternUnits="userSpaceOnUse">
+      <circle cx="4" cy="4" r=".65" fill="#b4b4b4"/>
+      <circle cx="13" cy="12" r=".6" fill="#b4b4b4"/>
+    </pattern>
+    <pattern id="gravel" width="28" height="26" patternUnits="userSpaceOnUse">
+      <path d="m4 5 5-2 3 4-4 3-4-2Z m15 12 5-1 3 4-4 4-5-3Z" fill="none" stroke="#999" stroke-width=".8"/>
+    </pattern>
+    <pattern id="cb" width="10" height="20" patternUnits="userSpaceOnUse">
+      <path d="M0 20 10 10M0 10 10 0" stroke="#999" stroke-width=".8"/>
+    </pattern>
+    <filter id="pin-shadow" x="-50%" y="-40%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#13283a" flood-opacity=".2"/>
+    </filter>
+  </defs>
+  <rect width="1000" height="820" fill="#fff"/>
+  <g fill="none" stroke="#535353">
+    <rect x="16" y="16" width="968" height="788" stroke-width="1.4"/>
+    <rect x="22" y="22" width="956" height="776" stroke-width=".5"/>
+  </g>
+  <g font-family="'Hiragino Kaku Gothic ProN','Yu Gothic',Meiryo,sans-serif" font-weight="400" fill="#323232">
+    <!-- Dimension values correspond to the geometry at 20 mm per drawing unit. -->
+    <g fill="none" stroke="#666" stroke-width=".9">
+      <path d="M180 58V132M830 58V132M255 92V175M730 92V175"/>
+      <path d="M180 66H830M180 103H830"/>
+      <path d="M176 70l8-8M826 70l8-8M176 107l8-8M251 107l8-8M726 107l8-8M826 107l8-8" stroke-width="1.4"/>
+      <path d="M830 125H906M830 650H906M895 125V650M891 121l8 8M891 646l8 8"/>
+      <path d="M131 455H190M131 650H190M140 455V650M136 451l8 8M136 646l8 8"/>
+      <path d="M190 650V684M740 650V684M830 650V684M190 674H830m-4-4 8 8m-98-8 8 8m-558-8 8 8"/>
+    </g>
+    <g font-family="Arial,'Hiragino Kaku Gothic ProN',sans-serif" font-size="20" text-anchor="middle">
+      <text x="505" y="57">13,000</text>
+      <text x="217.5" y="96" font-size="17">1,500</text>
+      <text x="492.5" y="96" font-size="17">9,500</text>
+      <text x="780" y="96" font-size="17">2,000</text>
+      <text x="911" y="387.5" transform="rotate(90 911 387.5)">10,500</text>
+      <text x="127" y="552.5" transform="rotate(-90 127 552.5)">3,900</text>
+      <text x="465" y="668" font-size="18">11,000</text>
+      <text x="785" y="668" font-size="18">1,800</text>
+    </g>
+
+    <!-- A compact north symbol and chain-line property boundary. -->
+    <g transform="translate(938 99)">
+      <text x="0" y="-34" font-family="Arial,sans-serif" font-size="17" text-anchor="middle">N</text>
+      <circle r="28" fill="none" stroke="#666" stroke-width="1"/>
+      <path d="M0-23 8 13 0 7-8 13Z" fill="#333"/>
+    </g>
+    <rect x="180" y="125" width="650" height="525" fill="none" stroke="#555" stroke-width="1.5" stroke-dasharray="16 5 3 5"/>
+    <g fill="#333">
+      <circle cx="180" cy="125" r="3"/><circle cx="830" cy="125" r="3"/>
+      <circle cx="180" cy="650" r="3"/><circle cx="830" cy="650" r="3"/>
+    </g>
+    <text x="103" y="269" text-anchor="middle" font-size="21">隣</text>
+    <text x="103" y="304" text-anchor="middle" font-size="21">地</text>
+    <text x="943" y="385" text-anchor="middle" font-size="21">隣</text>
+    <text x="943" y="420" text-anchor="middle" font-size="21">地</text>
+
+    <!-- Building outline: heavier walls, light eaves and porch joints. -->
+    <rect x="245" y="165" width="495" height="245" fill="none" stroke="#aaa" stroke-width=".8" stroke-dasharray="7 4"/>
+    <rect id="building" x="255" y="175" width="475" height="225" fill="#fafafa" stroke="#303030" stroke-width="3"/>
+    <rect x="262" y="182" width="461" height="211" fill="none" stroke="#777" stroke-width="1"/>
+    <text x="492.5" y="292" text-anchor="middle" font-size="29">既存建物</text>
+    <rect id="porch" x="455" y="400" width="80" height="40" fill="#fff" stroke="#555" stroke-width="1.5"/>
+    <path d="M455 420H535M495 400V440" fill="none" stroke="#aaa" stroke-width=".7"/>
+    <path d="M482 400H508" stroke="#fff" stroke-width="3"/>
+    <path d="M482 400V426M482 426A26 26 0 0 0 508 400" fill="none" stroke="#777" stroke-width=".8"/>
+    <text x="550" y="432" font-size="20">玄関ポーチ</text>
+
+    <!-- Three non-overlapping surface regions. Shared soil/gravel boundary: x=740. -->
+    <rect id="concrete-area" x="190" y="455" width="550" height="195" fill="url(#concrete)"/>
+    <rect id="gravel-area" x="740" y="415" width="90" height="235" fill="url(#gravel)"/>
+    <rect id="wall-area" x="180" y="415" width="10" height="235" fill="url(#cb)" stroke="#333" stroke-width="1.6"/>
+    <path d="M190 650V455H740V415H830V650Z M740 455V650" fill="none" stroke="#444" stroke-width="1.5"/>
+    <path d="M373.33 455V650M556.67 455V650" stroke="#888" stroke-width=".8"/>
+    <path d="M180 455H190M180 495H190M180 535H190M180 575H190M180 615H190" stroke="#666" stroke-width=".8"/>
+    <path d="M72 399H140L185 425" fill="none" stroke="#555" stroke-width=".9"/>
+    <text x="72" y="390" font-size="22">CB塀</text>
+    <rect x="342" y="568" width="250" height="40" fill="#fff"/>
+    <text x="467" y="596" text-anchor="middle" font-size="27">土間コンクリート</text>
+    <rect x="755" y="559" width="61" height="36" fill="#fff"/>
+    <text x="785" y="585" text-anchor="middle" font-size="25">砕石</text>
+
+    <!-- App pins are the sole colored overlay and do not obscure annotations. -->
+    <g filter="url(#pin-shadow)" stroke="#fff" stroke-width="4">
+      <path d="M179 532 185 541 191 532" fill="#086edb" stroke-linejoin="round"/>
+      <circle cx="185" cy="507" r="29" fill="#086edb"/>
+      <path d="M461 526 467 535 473 526" fill="#c65027" stroke-linejoin="round"/>
+      <circle cx="467" cy="501" r="29" fill="#c65027"/>
+    </g>
+    <text x="185" y="515" fill="#fff" text-anchor="middle" font-size="24" font-weight="600">CB</text>
+    <text x="467" y="509" fill="#fff" text-anchor="middle" font-size="22" font-weight="600">土間</text>
+
+    <path d="M51 697H952M51 733H952" stroke="#555" stroke-width="1.1"/>
+    <path d="M51 715H355M645 715H952" stroke="#999" stroke-width=".8" stroke-dasharray="20 12"/>
+    <text x="500" y="724" text-anchor="middle" font-size="23">前面道路</text>
+
+    <!-- Drawing title block, with sample status retained in standalone viewing. -->
+    <text x="48" y="769" font-size="16" fill="#666">図面とピンの表示イメージ</text>
+    <text x="48" y="790" font-size="13" fill="#888">寸法・配置は機能紹介用のサンプルです。</text>
+    <g fill="none" stroke="#666" stroke-width=".8">
+      <rect x="490" y="746" width="488" height="52"/>
+      <path d="M490 771H978M574 746V798M814 746V798M876 746V798"/>
+    </g>
+    <g font-size="14">
+      <text x="502" y="764">図面名称</text><text x="590" y="764" font-size="19" letter-spacing="5">外構配置図</text>
+      <text x="824" y="764">図番</text><text x="890" y="764">A–01</text>
+      <text x="502" y="790">図面種別</text><text x="590" y="790">表示用サンプル</text>
+      <text x="824" y="790">縮尺</text><text x="890" y="790">NTS / mm</text>
+    </g>
+  </g>
+</svg>

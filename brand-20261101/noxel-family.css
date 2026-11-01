@@ -1,0 +1,77 @@
+/* The same transparent product artwork and lead copy as the NOXEL site. */
+.noxel-portfolio {
+ grid-template-columns:minmax(0,1.15fr) minmax(0,1fr); grid-template-rows:auto auto;
+ align-items:start; column-gap:70px; row-gap:25px; padding-block:48px 72px;
+}
+.noxel-intro-heading { grid-column:1; grid-row:1; min-width:0; }
+.noxel-portfolio .noxel-summary { grid-column:1; grid-row:2; padding:0; }
+.noxel-app-world {
+ position:relative; isolation:isolate; grid-column:2; grid-row:1 / span 2;
+ width:100%; max-width:520px; aspect-ratio:520/440;
+ align-self:center; justify-self:end;
+}
+.noxel-app-world::before {
+ content:""; position:absolute; inset:6% -6% -1%; z-index:-1; pointer-events:none;
+ background:radial-gradient(ellipse,#d9edf6 0%,#e7f1f2 33%,#e7f1f200 71%);
+}
+.app-world-token {
+ --turn:0deg; position:absolute; display:flex; flex-direction:column; align-items:center;
+ gap:13px; transform:rotate(var(--turn)); color:#627f92;
+ border-radius:30px; transition:transform .25s ease,color .25s ease;
+}
+.app-world-token img {
+ width:100%; height:auto; aspect-ratio:1; object-fit:contain;
+ filter:drop-shadow(0 14px 13px #247daa13);
+}
+.app-world-token > span { font:500 14px/1.5 var(--latin); letter-spacing:.035em; white-space:nowrap; }
+.app-world-token b { display:inline-block; font-size:14px; font-weight:400; margin-left:5px; }
+.app-world-photo { --turn:-9deg; width:47%; left:0; top:12%; }
+.app-world-link { --turn:9deg; width:36%; right:1%; top:0; }
+.app-world-base { --turn:-5deg; width:42%; right:7%; bottom:0; }
+.app-world-token:hover,.app-world-token:focus-visible { transform:translateY(-7px) rotate(var(--turn)); color:#087cb5; }
+.noxel-app-world .app-world-token:focus-visible { outline:2px solid #087cb5; outline-offset:8px; }
+.noxel .app-text h3 > span { display:block; }
+.noxel .base-copy { min-width:0; }
+.noxel .base-name { display:block; font:500 18px/1.4 var(--latin); color:#52685e; margin-bottom:9px; }
+.noxel .base-copy h3 { font-size:24px; font-weight:450; line-height:1.7; letter-spacing:-.015em; }
+.noxel .base-copy h3 span { display:inline-block; }
+.noxel .base-copy p { margin-top:8px; color:#69726d; font-size:13px; }
+.noxel .noxel-more { padding-block:34px; }
+.noxel .noxel-more img { width:88px; height:88px; }
+@media (max-width:1100px) {
+ .noxel-portfolio { column-gap:30px; row-gap:23px; }
+ .noxel-portfolio h2 { font-size:clamp(29px,3.7vw,40px); line-height:1.55; }
+ .noxel-portfolio .noxel-summary p { font-size:13px; }
+ .app-world-token { gap:8px; }
+ .app-world-token > span { font-size:12px; }
+ .app-world-token b { font-size:12px; margin-left:3px; }
+ .noxel .app-text h3 { font-size:clamp(24px,3.05vw,32px); }
+ .noxel .base-copy h3 { font-size:22px; }
+}
+@media (max-width:760px) {
+ .noxel-portfolio { grid-template-columns:minmax(0,1fr); grid-template-rows:auto auto auto; gap:25px; padding-block:29px 40px; }
+ .noxel-intro-heading { grid-column:1; grid-row:1; }
+ .noxel-portfolio h2 { font-size:clamp(29px,7.9vw,42px); }
+ .noxel-portfolio .noxel-wordmark { margin-bottom:21px; }
+ .noxel-app-world { grid-column:1; grid-row:2; justify-self:center; max-width:410px; aspect-ratio:340/280; margin-block:0 4px; }
+ .noxel-app-world::before { inset:6% 0 -1%; }
+ .app-world-photo { width:45%; top:12%; left:1%; }
+ .app-world-link { width:33%; right:3%; }
+ .app-world-base { width:39%; right:7%; }
+ .noxel-portfolio .noxel-summary { grid-column:1; grid-row:3; }
+ .noxel-portfolio .noxel-summary p { font-size:13px; }
+ .noxel-portfolio .text-link { margin-top:17px; }
+ .noxel .app-text h3 { font-size:clamp(25px,7.2vw,34px); }
+ .noxel .noxel-more { align-items:flex-start; flex-direction:column; gap:20px; }
+ .noxel .noxel-more > div { gap:18px; }
+ .noxel .noxel-more img { width:70px; height:70px; }
+ .noxel .base-name { font-size:18px; }
+ .noxel .base-copy h3 { font-size:21px; }
+ .noxel .base-copy h3 span { display:block; }
+ .noxel .base-copy p { font-size:12px; }
+ .noxel .noxel-more > a { margin-left:88px; }
+}
+@media(prefers-reduced-motion:reduce) {
+ .app-world-token { transition:none; }
+ .app-world-token:hover,.app-world-token:focus-visible { transform:rotate(var(--turn)); }
+}

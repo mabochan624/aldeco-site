@@ -1,0 +1,81 @@
+/* Generated construction-stage images alongside the approved sample plan. */
+.drawing-bridge.place-history { display:block; }
+.place-history .drawing-copy {
+ display:grid; grid-template-columns:1.1fr 1fr; column-gap:72px;
+ align-items:end; margin-bottom:34px;
+}
+.place-history .drawing-copy .eyebrow { grid-column:1 / -1; }
+.place-history .drawing-copy h3 { margin-top:18px; }
+.place-history .drawing-copy > p:last-child { margin:0 0 4px; max-width:31em; }
+.place-history .drawing-copy > p:last-child span { display:inline-block; }
+.place-history .drawing-copy > p:last-child span:first-child { display:block; }
+.place-demo {
+ display:grid; grid-template-columns:minmax(0,1.08fr) 36px minmax(0,1fr);
+ align-items:center; gap:20px; padding:32px;
+ border:1px solid #dce2df; border-radius:12px; background:#fff;
+}
+.place-plan { min-width:0; }
+.place-plan .drawing-window { border:0; border-radius:0; }
+.place-plan-label {
+ display:flex; justify-content:space-between; align-items:baseline;
+ gap:12px; margin-bottom:18px; color:#52665e; font-size:12px; line-height:1.7;
+}
+.place-plan-label b { font-weight:500; }
+.place-plan-label > span { color:#7d8781; font-size:10px; }
+.place-flow { width:36px; height:24px; color:#9bafa6; }
+.place-records { min-width:0; }
+.place-records-title { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:19px; }
+.place-records-title h4 { margin:0; font-size:17px; font-weight:500; line-height:1.8; }
+.place-records-title > span { font-size:10px; color:#7d8781; white-space:nowrap; }
+.place-record { --pin:#086edb; }
+.place-record + .place-record { margin-top:24px; padding-top:23px; border-top:1px solid #e4e8e5; }
+.place-record--concrete { --pin:#c65027; }
+.place-record-heading { display:flex; align-items:center; gap:10px; margin-bottom:13px; }
+.place-pin {
+ display:grid; place-items:center; flex:0 0 auto;
+ width:32px; height:32px; border-radius:50%; background:var(--pin); color:#fff;
+ font-size:12px; font-weight:600; line-height:1;
+}
+.place-record-heading h5 { margin:0; font-size:15px; font-weight:500; line-height:1.6; }
+.place-photo-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+.place-history .place-photo { min-width:0; margin:0; }
+.place-photo-viewport { position:relative; display:block; width:100%; padding:0; border:0; overflow:hidden; aspect-ratio:1; border-radius:5px; background:#f0f1ee; cursor:zoom-in; }
+.place-photo-viewport img {
+ display:block; width:100%; height:100%; aspect-ratio:1; object-fit:cover;
+}
+/* Keep the source camera fixed; only the thumbnail viewport focuses on its pin. */
+.place-record:not(.place-record--concrete) .place-photo-viewport img {
+ position:absolute; width:280%; max-width:none; height:280%; left:0; top:-130%;
+}
+.place-record--concrete .place-photo-viewport img {
+ position:absolute; width:240%; max-width:none; height:240%; left:-70%; top:-108%;
+}
+.place-photo-expand { position:absolute; display:grid; place-items:center; width:24px; height:24px; right:7px; bottom:7px; border-radius:50%; background:#ffffffdf; color:#43534a; font:400 16px/1 var(--latin); }
+.place-history .place-photo figcaption { margin-top:8px; font-size:11px; line-height:1.6; color:#6a746e; }
+.place-history-note { margin-top:13px; font-size:10px; color:#7a837d; line-height:1.9; }
+@media (max-width:1100px) {
+ .place-history .drawing-copy { column-gap:38px; margin-bottom:28px; }
+ .place-demo { gap:14px; padding:24px; grid-template-columns:minmax(0,1fr) 26px minmax(0,1fr); }
+ .place-flow { width:26px; }
+ .place-photo-grid { gap:8px; }
+ .place-records-title h4 { font-size:15px; }
+ .place-records-title > span { font-size:9px; }
+ .place-record + .place-record { margin-top:20px; padding-top:18px; }
+}
+@media (max-width:760px) {
+ .place-history .drawing-copy { grid-template-columns:minmax(0,1fr); gap:0; margin-bottom:25px; }
+ .place-history .drawing-copy h3 { font-size:28px; margin-top:15px; }
+ .place-history .drawing-copy > p:last-child { margin-top:18px; font-size:13px; }
+ .place-demo { grid-template-columns:minmax(0,1fr); gap:20px; padding:18px 14px 22px; border-radius:8px; }
+ .place-plan-label { margin-bottom:12px; font-size:11px; }
+ .place-plan-label > span { font-size:9px; }
+ .place-flow { justify-self:center; width:26px; height:26px; transform:rotate(90deg); }
+ .place-records-title { margin-bottom:16px; }
+ .place-records-title h4 { font-size:16px; }
+ .place-records-title > span { font-size:10px; }
+ .place-pin { width:29px; height:29px; font-size:11px; }
+ .place-record-heading { margin-bottom:11px; }
+ .place-record-heading h5 { font-size:14px; }
+ .place-history .place-photo figcaption { font-size:10px; }
+ .place-history-note { margin-top:11px; font-size:10px; }
+}

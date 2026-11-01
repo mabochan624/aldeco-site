@@ -1,0 +1,67 @@
+.one-surface-hero { padding-top:25px; }
+.surface-stage { position:relative; isolation:isolate; overflow:hidden; background:#111820; aspect-ratio:1672/941; }
+.surface-image { position:absolute; inset:0; width:100%; height:100%; object-fit:contain; z-index:-1; }
+.surface-copy { position:absolute; top:7.4%; left:4.3%; color:#f9f8f3; }
+.surface-copy .eyebrow { color:#aab3b5; font-size:8px; letter-spacing:.17em; margin-bottom:21px; }
+.surface-copy h1 { display:flex; align-items:center; font-size:clamp(42px,4.2vw,63px); font-weight:430; line-height:1.3; letter-spacing:.005em; white-space:nowrap; }
+.surface-copy h1 > span { display:inline-flex; align-items:center; }
+.surface-answer img { width:1.12em; height:1.03em; object-fit:contain; margin-inline:.025em; }
+.surface-declaration { display:flex; flex-direction:column; gap:3px; margin-top:24px; font-size:clamp(13px,1.25vw,18px); line-height:1.9; letter-spacing:.045em; color:#e0e6e3; }
+.surface-footer { position:absolute; bottom:24px; left:4.3%; right:4.3%; display:flex; justify-content:space-between; align-items:baseline; color:#e3e7e1; gap:20px; text-shadow:0 1px 5px #0008; }
+.surface-footer > span { font:400 8px/1.8 var(--latin); letter-spacing:.13em; }
+.surface-footer a { display:flex; align-items:center; gap:24px; font-size:10px; padding-block:8px; }
+.surface-footer b { font-size:20px; font-weight:400; }
+.surface-footer a:focus-visible { outline-color:#fff; }
+.surface-caption { display:flex; justify-content:space-between; gap:24px; margin-top:16px; font-size:11px; color:var(--muted); }
+.surface-caption small { font-size:8px; line-height:1.8; color:#7c857d; }
+.surface-direction .construction { padding-top:82px; }
+.surface-direction .construction .section-head { margin-bottom:42px; }
+.surface-direction .construction .section-head > div > p { color:#69726d; font-size:15px; line-height:2.15; }
+.surface-direction .construction-photos { margin-top:50px; }
+.surface-direction .surface-evidence { margin:0; }
+.surface-evidence .photo-button { aspect-ratio:8/5; }
+.surface-evidence .photo-button img { width:100%; height:auto; }
+.surface-direction .surface-practices { display:flex; flex-wrap:wrap; gap:10px 24px; margin-top:23px; padding-top:20px; border-top:1px solid #d5dbd1; font-size:12px; color:#3f5347; }
+.surface-practices a { display:flex; align-items:baseline; gap:11px; }
+.surface-practices a span { font-size:14px; color:#9c6c46; }
+.surface-direction .study-switch .surface-compare { color:#a75330; }
+@media (max-width:1100px) {
+ .one-surface-hero { padding-top:20px; }
+ .surface-copy .eyebrow { font-size:6px; margin-bottom:15px; }
+ .surface-copy h1 { font-size:4.1vw; }
+ .surface-declaration { margin-top:17px; font-size:11px; line-height:1.9; gap:0; }
+ .surface-footer { bottom:15px; }
+ .surface-footer > span { font-size:6px; }
+ .surface-footer a { font-size:9px; gap:18px; }
+ .surface-caption { display:block; }
+ .surface-caption small { display:block; margin-top:6px; }
+}
+@media (max-width:760px) {
+ .one-surface-hero { padding-top:18px; }
+ .surface-stage { width:calc(100% - 24px); aspect-ratio:auto; height:430px; }
+ .surface-image { top:auto; bottom:28px; height:auto; mask-image:linear-gradient(to bottom,transparent,#000 19%); }
+ .surface-copy { left:22px; top:26px; right:20px; }
+ .surface-copy .eyebrow { font-size:6px; margin-bottom:24px; letter-spacing:.12em; }
+ .surface-copy h1 { flex-wrap:wrap; white-space:normal; font-size:clamp(35px,10.1vw,50px); line-height:1.4; }
+ .surface-declaration { margin-top:15px; font-size:11px; line-height:1.9; }
+ .surface-footer { bottom:5px; left:22px; right:22px; gap:12px; }
+ .surface-footer > span { font-size:5px; letter-spacing:.07em; }
+ .surface-footer a { font-size:8px; gap:10px; }
+ .surface-footer b { font-size:15px; }
+ .surface-caption { font-size:10px; line-height:1.9; margin-top:15px; }
+ .surface-caption small { font-size:7px; }
+ .surface-direction .construction { padding-top:44px; }
+ .surface-direction .construction .section-head { gap:21px; margin-bottom:29px; }
+ .surface-direction .construction .section-head > div > p { font-size:13px; line-height:2.05; }
+ .surface-direction .construction .section-head > div > p br { display:none; }
+ .surface-direction .construction-photos { margin-top:32px; }
+ .surface-direction .surface-practices { gap:8px 18px; margin-top:18px; padding-top:17px; font-size:11px; }
+}
+@media (max-width:360px) {
+ .surface-stage { height:405px; }
+ .surface-copy { left:20px; right:16px; }
+ .surface-copy h1 { font-size:34px; }
+ .surface-declaration { font-size:10px; }
+ .surface-footer { left:20px; right:20px; }
+ .surface-footer > span { font-size:4px; }
+}

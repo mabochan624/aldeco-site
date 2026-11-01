@@ -1,0 +1,77 @@
+/* Typography and navigation belong to the scene, while remaining live text. */
+.town-immersive-direction .field-header {
+ position:absolute; top:0; left:50%; transform:translateX(-50%); z-index:5;
+ height:96px; border:0;
+}
+.town-immersive-direction .field-header nav {
+ position:absolute; left:50%; transform:translateX(-50%); margin:0;
+ gap:34px; font-size:12px;
+}
+.town-immersive-direction .header-mail { margin-left:auto; }
+.town-scene {
+ position:relative; isolation:isolate; padding-top:128px;
+ background:linear-gradient(180deg,#f8f7f3 0,#eef3f1 96px,#c6e4f2 285px);
+}
+.town-immersive-direction .surface-heading {
+ position:absolute; inset:118px 0 auto; z-index:2; display:block;
+ width:100%; padding:0 24px; text-align:center; pointer-events:none;
+}
+.town-immersive-direction .surface-copy h1 {
+ justify-content:center; gap:.12em; margin:0;
+ font-size:clamp(44px,4.65vw,76px); line-height:1.3; font-weight:440;
+ letter-spacing:.015em; color:#2e3934;
+}
+.town-immersive-direction .surface-answer img { width:1.08em; height:1.02em; }
+.town-immersive-direction .surface-stage {
+ width:100%; max-width:1920px; height:auto; margin:0 auto; background:transparent;
+ aspect-ratio:1672/941;
+}
+.town-immersive-direction .surface-image {
+ mask-image:linear-gradient(to bottom,transparent,#000 110px);
+}
+.town-immersive-direction .surface-art:focus-visible { outline-offset:-7px; }
+.town-immersive-direction .surface-expand {
+ right:3.5%; bottom:24px; width:42px; height:42px;
+ background:#f8f7f3ed; color:#344f42; border-color:#fff8;
+}
+.town-immersive-direction .surface-art:hover .surface-expand { background:#fff; }
+.town-immersive-direction .surface-caption { margin-top:22px; }
+.town-immersive-direction .surface-caption p { font-size:12px; letter-spacing:.025em; }
+.town-immersive-direction .surface-caption p span { display:inline-block; }
+@media(min-width:1921px) {
+ .town-scene { max-width:1920px; margin-inline:auto; }
+}
+@media(max-width:1100px) {
+ .town-immersive-direction .field-header { height:82px; }
+ .town-immersive-direction .field-header nav { gap:23px; font-size:11px; }
+ .town-immersive-direction .wordmark span { font-size:25px; }
+ .town-immersive-direction .header-mail { font-size:9px; gap:10px; }
+ .town-scene { padding-top:118px; }
+ .town-immersive-direction .surface-heading { top:118px; }
+ .town-immersive-direction .surface-copy h1 { font-size:5vw; }
+ .town-immersive-direction .surface-image { mask-image:linear-gradient(to bottom,transparent,#000 85px); }
+}
+@media(max-width:760px) {
+ .town-immersive-direction .field-header { min-height:112px; height:auto; padding-block:22px 0; gap:15px; }
+ .town-immersive-direction .field-header nav {
+  position:static; transform:none; border:0; justify-content:center;
+  padding-top:3px; gap:26px; font-size:11px; width:100%;
+ }
+ .town-immersive-direction .field-header nav a { padding-block:10px; }
+ .town-immersive-direction .wordmark span { font-size:23px; }
+ .town-immersive-direction .wordmark img { width:30px; height:29px; }
+ .town-immersive-direction .header-mail { margin:0 0 0 auto; }
+ .town-scene { padding-top:304px; background:linear-gradient(180deg,#f8f7f3 0,#edf2ef 230px,#c6e4f2 380px); }
+ .town-immersive-direction .surface-heading { top:150px; padding-inline:20px; }
+ .town-immersive-direction .surface-copy h1 {
+  flex-direction:column; align-items:center; gap:0; font-size:clamp(40px,10.6vw,61px);
+  line-height:1.45; letter-spacing:.025em;
+ }
+ .town-immersive-direction .surface-stage { width:100%; height:auto; }
+ .town-immersive-direction .surface-image { mask-image:linear-gradient(to bottom,transparent,#000 32px); }
+ .town-immersive-direction .surface-expand { right:14px; bottom:14px; width:32px; height:32px; }
+ .town-immersive-direction .surface-caption { margin-top:21px; }
+ .town-immersive-direction .surface-caption p { font-size:12px; line-height:1.9; }
+ .town-immersive-direction .surface-caption p span { display:block; }
+ .town-immersive-direction .surface-caption a { margin-top:11px; }
+}
