@@ -298,6 +298,7 @@ section.alt { background: var(--surface); }
 
 /* ---- business cards ---- */
 .biz { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.biz--two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .biz-card {
   background: var(--surface2);
   border: 2px solid var(--line);
